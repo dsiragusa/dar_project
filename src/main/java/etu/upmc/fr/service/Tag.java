@@ -14,7 +14,7 @@ public class Tag {
 
     private String name;
 
-    @ManyToMany(targetEntity = Service.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "tags")
+    @ManyToMany(targetEntity = Service.class, mappedBy = "tags")
     private Set<Service> services;
 
     public Tag() {

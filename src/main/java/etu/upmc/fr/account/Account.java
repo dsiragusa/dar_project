@@ -11,10 +11,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @SuppressWarnings("serial")
 @Entity
@@ -46,14 +43,27 @@ public class Account implements java.io.Serializable {
     @NotBlank
 	private String lastName;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date signupDate;
+
 	@OneToMany(mappedBy = "account")
     @NotEmpty
     @Valid
 	@JsonIgnore
 	private List<Address> addresses;
 
+    @OneToMany(mappedBy = "requestor")
+    private Set<Service> requests;
+
+    @ManyToMany(mappedBy = "offerors", targetEntity = Service.class)
+    private Set<Service> offers;
+
+    @OneToMany(mappedBy = "contractor")
+    private Set<Service> contracts;
+
     public Account() {
         addresses = new ArrayList<>();
+        setSignupDate(new Date());
 	}
 
 	public Long getId() {
@@ -107,4 +117,36 @@ public class Account implements java.io.Serializable {
 	public void setAddresses(List<Address> addresses) {
 		this.addresses = addresses;
 	}
+
+    public Date getSignupDate() {
+        return signupDate;
+    }
+
+    public void setSignupDate(Date signupDate) {
+        this.signupDate = signupDate;
+    }
+
+    public Set<Service> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(Set<Service> requests) {
+        this.requests = requests;
+    }
+
+    public Set<Service> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(Set<Service> offers) {
+        this.offers = offers;
+    }
+
+    public Set<Service> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(Set<Service> contracts) {
+        this.contracts = contracts;
+    }
 }
