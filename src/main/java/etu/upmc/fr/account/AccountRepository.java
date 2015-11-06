@@ -23,7 +23,7 @@ public class AccountRepository {
 		entityManager.persist(account);
 		return account;
 	}
-	
+
 	public Account findByEmail(String email) {
 		try {
 			return entityManager.createNamedQuery(Account.FIND_BY_EMAIL, Account.class)

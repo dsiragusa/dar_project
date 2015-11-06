@@ -1,9 +1,20 @@
 package etu.upmc.fr.account;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import etu.upmc.fr.address.Address;
+import etu.upmc.fr.service.Service;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @SuppressWarnings("serial")
 @Entity
@@ -18,28 +29,31 @@ public class Account implements java.io.Serializable {
 	private Long id;
 
 	@Column(unique = true)
+    @NotBlank
+    @Email
 	private String email;
 	
 	@JsonIgnore
+    @NotBlank
 	private String password;
 
+	@Column(nullable = false)
 	private String role = "ROLE_USER";
 
+    @NotBlank
 	private String firstName;
 
+    @NotBlank
 	private String lastName;
 
-	@ManyToOne
-	private Address address;
+	@OneToMany(mappedBy = "account")
+    @NotEmpty
+    @Valid
+	@JsonIgnore
+	private List<Address> addresses;
 
-    protected Account() {
-
-	}
-	
-	public Account(String email, String password, String role) {
-		this.email = email;
-		this.password = password;
-		this.role = role;
+    public Account() {
+        addresses = new ArrayList<>();
 	}
 
 	public Long getId() {
@@ -86,11 +100,11 @@ public class Account implements java.io.Serializable {
 		this.lastName = lastName;
 	}
 
-	public Address getAddress() {
-		return address;
+	public List<Address> getAddresses() {
+		return addresses;
 	}
 
-	public void setAddress(Address address) {
-		this.address = address;
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
 	}
 }

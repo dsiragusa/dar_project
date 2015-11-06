@@ -1,8 +1,12 @@
 package etu.upmc.fr.address;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import etu.upmc.fr.account.Account;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 @Entity
@@ -12,16 +16,29 @@ public class Address {
     @GeneratedValue
     private Long id;
 
+    @NotBlank
+    private String name;
+
+    @NotBlank
     private String line1;
     private String line2;
-    private String city;
-    private String zip;
-    private String country;
 
-    @OneToMany(mappedBy="address")
-    private Set<Account> accounts;
+    @NotBlank
+    private String city;
+
+    @Length(min = 5, max = 5)
+    @Pattern(regexp = "^(7[578]|9[1-5])[0-9]{3}$")
+    private String zip;
+
+    private String country = "FR";
+    private Boolean main;
+
+    @JsonIgnore
+    @ManyToOne
+    private Account account;
 
     public Address() {
+        name = "New address";
     }
 
     public Long getId() {
@@ -68,11 +85,27 @@ public class Address {
         this.country = country;
     }
 
-    public Set<Account> getAccounts() {
-        return accounts;
+    public String getName() {
+        return name;
     }
 
-    public void setAccounts(Set<Account> accounts) {
-        this.accounts = accounts;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public Boolean getMain() {
+        return main;
+    }
+
+    public void setMain(Boolean main) {
+        this.main = main;
     }
 }
