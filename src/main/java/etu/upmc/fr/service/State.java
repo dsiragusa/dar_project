@@ -7,11 +7,15 @@ import java.util.Set;
 @Entity
 @Table(name = "state")
 public class State {
+    public static final Integer BIDDING = 0,
+                                VALIDATING = 1,
+                                CONTRACT = 2;
+
     @Id
     @GeneratedValue
     private Long id;
 
-    private String name;
+    private Integer code;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date start;
@@ -29,12 +33,12 @@ public class State {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public Integer getCode() {
+        return code;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCode(Integer code) {
+        this.code = code;
     }
 
     public Date getStart() {
