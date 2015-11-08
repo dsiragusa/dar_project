@@ -27,6 +27,7 @@ public class State {
     private Service service;
 
     public State() {
+        setStart(new Date());
     }
 
     public Long getId() {
@@ -55,5 +56,13 @@ public class State {
 
     public void setEnd(Date end) {
         this.end = end;
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
     }
 }

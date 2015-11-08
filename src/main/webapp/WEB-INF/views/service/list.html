@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="#{view.index.title}">Welcome!</title>
+    <title th:text="#{view.service.list.title}">Welcome!</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
     <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
@@ -11,20 +11,9 @@
 <body>
 <div th:replace="fragments/header :: header">&nbsp;</div>
 <div class="container">
-    <!-- /* Handle the flash message */-->
-    <th:block th:if="${message != null}">
-        <!-- /* The message code is returned from the @Controller */ -->
-        <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
-    </th:block>
-    <p>
-        Welcome to the Spring MVC Quickstart application!
-    </p>
-    <p>
-        <a th:href="@{/service/create}">Request a service</a>
-    </p>
-    <p>
-        <a th:href="@{/service}">List services</a>
-    </p>
+    <ul>
+        <li th:each="s : ${services}"><a th:href="@{/service/details/{id}(id = ${s.id})}" th:text="${s.title}"></a></li>
+    </ul>
 </div>
 </body>
 </html>

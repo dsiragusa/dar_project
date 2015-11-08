@@ -1,7 +1,10 @@
 package etu.upmc.fr.config;
 
-import static org.springframework.context.annotation.ComponentScan.Filter;
-
+import etu.upmc.fr.Application;
+import etu.upmc.fr.annotations.GetAccountArgumentResolver;
+import etu.upmc.fr.format.AddressFormatter;
+import etu.upmc.fr.format.CategoryFormatter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -9,10 +12,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -23,7 +28,9 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
-import etu.upmc.fr.Application;
+import java.util.List;
+
+import static org.springframework.context.annotation.ComponentScan.Filter;
 
 @Configuration
 @PropertySource("classpath:application.properties")
@@ -39,6 +46,11 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
+    }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(new GetAccountArgumentResolver());
     }
 
     @Override
@@ -93,6 +105,17 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler(RESOURCES_HANDLER).addResourceLocations(RESOURCES_LOCATION);
+    }
+
+    @Autowired
+    AddressFormatter addressFormatter;
+    @Autowired
+    CategoryFormatter categoryFormatter;
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(addressFormatter);
+        registry.addFormatter(categoryFormatter);
     }
 
     @Override
