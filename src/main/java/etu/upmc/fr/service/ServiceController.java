@@ -1,6 +1,7 @@
 package etu.upmc.fr.service;
 
 import etu.upmc.fr.account.Account;
+import etu.upmc.fr.account.AccountRepository;
 import etu.upmc.fr.annotations.GetAccount;
 import etu.upmc.fr.support.web.MessageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class ServiceController {
     private ServiceRepository serviceRepository;
 
     @Autowired
+    private AccountRepository accountRepository;
+
     private CategoryRepository categoryRepository;
 
     @Autowired
