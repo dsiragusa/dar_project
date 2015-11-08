@@ -28,6 +28,7 @@ public class UserService implements UserDetailsService {
 		if(account == null) {
 			throw new UsernameNotFoundException("user not found");
 		}
+
 		return createUser(account);
 	}
 	
@@ -40,7 +41,7 @@ public class UserService implements UserDetailsService {
 	}
 	
 	private User createUser(Account account) {
-		return new User(account.getEmail(), account.getPassword(), Collections.singleton(createAuthority(account)));
+		return new UserWithAccount(account.getEmail(), account.getPassword(), Collections.singleton(createAuthority(account)), account);
 	}
 
 	private GrantedAuthority createAuthority(Account account) {

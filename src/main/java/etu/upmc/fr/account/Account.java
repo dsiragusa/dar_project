@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import etu.upmc.fr.address.Address;
+import etu.upmc.fr.annotations.MyDateTime;
 import etu.upmc.fr.service.Service;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -44,12 +45,12 @@ public class Account implements java.io.Serializable {
 	private String lastName;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @MyDateTime
     private Date signupDate;
 
-	@OneToMany(mappedBy = "account")
+	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
     @NotEmpty
     @Valid
-	@JsonIgnore
 	private List<Address> addresses;
 
     @OneToMany(mappedBy = "requestor")

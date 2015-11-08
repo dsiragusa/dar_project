@@ -1,6 +1,5 @@
 package etu.upmc.fr.service;
 
-import etu.upmc.fr.GenericRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,9 +8,15 @@ import javax.persistence.PersistenceContext;
 
 @Repository
 @Transactional
-public class ServiceRepository extends GenericRepository<Service>{
+public class StateRepository {
 
-    public ServiceRepository() {
-        super(Service.class);
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Transactional
+    public State save(State state) {
+        entityManager.persist(state);
+
+        return state;
     }
 }

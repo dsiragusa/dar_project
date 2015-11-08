@@ -2,10 +2,14 @@ package etu.upmc.fr.service;
 
 import etu.upmc.fr.account.Account;
 import etu.upmc.fr.address.Address;
+import etu.upmc.fr.annotations.MyDateTime;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -49,9 +53,13 @@ public class Service {
     private Address address;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
+    @MyDateTime
     private Date biddingDeadline;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
+    @MyDateTime
     private Date serviceDeadline;
 
     public Service() {
