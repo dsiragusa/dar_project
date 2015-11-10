@@ -31,25 +31,25 @@ public class Service {
     @Length(min = 10)
     private String description;
 
-    @ManyToMany(targetEntity = Tag.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(targetEntity = Tag.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Set<Tag> tags;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
-    @OneToMany(mappedBy = "service")
+    @OneToMany(mappedBy = "service", fetch = FetchType.EAGER)
     private List<State> states;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Account requestor;
 
-    @ManyToMany(targetEntity = Account.class)
+    @ManyToMany(targetEntity = Account.class, fetch = FetchType.EAGER)
     private Set<Account> offerors;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Account contractor;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Address address;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -102,11 +102,29 @@ public class Service {
         this.offerors = offerors;
     }
 
+    public void addOfferor(Account offeror) throws Exception {
+        if (offeror.equals(requestor)) {
+            throw new Exception("Contractor cannot be the same account as requestor");
+        }
+
+        State current = states.get(states.size() - 1);
+
+        if ( ! current.getCode().equals(State.BIDDING)) {
+            throw new Exception("Bidding phase has expired");
+        }
+
+        this.offerors.add(offeror);
+    }
+
     public Account getContractor() {
         return contractor;
     }
 
-    public void setContractor(Account contractor) {
+    public void setContractor(Account contractor) throws Exception {
+        if (contractor.equals(requestor)) {
+            throw new Exception("Contractor cannot be the same account as requestor");
+        }
+
         this.contractor = contractor;
     }
 

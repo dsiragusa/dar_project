@@ -11,8 +11,13 @@
 <body>
 <div th:replace="fragments/header :: header">&nbsp;</div>
 <div class="container">
+    <th:block th:if="${message != null}">
+        <!-- /* The message code is returned from the @Controller */ -->
+        <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}})">&nbsp;</div>
+    </th:block>
+
     <ul>
-        <li th:each="s : ${services}"><a th:href="@{/service/details/{id}(id = ${s.id})}" th:text="${s.title}"></a></li>
+        <li th:each="s : ${services}"><a th:href="@{/service/{id}(id = ${s.id})}" th:text="${s.title}"></a></li>
     </ul>
 </div>
 </body>
