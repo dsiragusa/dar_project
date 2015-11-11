@@ -1,21 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
 <head>
-
     <title>Profile</title>
-
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
-    <link href="../../../resources/css/simple-sidebar.css" rel="stylesheet" media="screen" th:href="@{/resources/css/simple-sidebar.css}"/>
-    <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
-
-
+    <link th:href="@{/resources/css/simple-sidebar.css}" rel="stylesheet" media="screen" />
+    <!-- Menu Toggle Script -->
     <script>
-        function menuToggleClicked() {
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
             $("#wrapper").toggleClass("toggled");
-        }
+        });
     </script>
 
     <script>
@@ -52,11 +47,14 @@
             document.getElementById('itemHistory').style.display = "none";
         }
     </script>
-
+    <script>
+        function menuToggleClicked() {
+            $("#wrapper").toggleClass("toggled");
+        }
+    </script>
 </head>
-<body style="margin-top: -10px;">
-<div th:replace="fragments/header :: header">Header</div>
-<div id="wrapper">
+<body >
+<section layout:fragment="content">
 
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
@@ -93,25 +91,25 @@
                     <a href="#menu-toggle" class="btn btn-default glyphicon glyphicon-list" id="menu-toggle" onclick="menuToggleClicked()"></a>
 
                     <div id="itemInformations">
-                        <div th:replace="account/fragments/informations :: informations (account=${account})">informations</div>
+                        <div th:replace="account/fragments/informations :: informations(account=${account})">informations</div>
                     </div>
                     <div style="display: none;" id="itemReviews">
                         <div th:replace="account/fragments/reviews :: reviews">reviews</div>
                     </div>
                     <div style="display: none;" id="itemPending">
-                        <div th:replace="account/fragments/pending :: pending">pending</div>
+                        <div th:replace="account/fragments/pending :: pending"></div>
                     </div>
                     <div style="display: none;" id="itemApplications">
-                        <div th:replace="account/fragments/applications :: applications">applications</div>
+                        <div th:replace="account/fragments/applications :: applications"></div>
                     </div>
                     <div style="display: none;" id="itemHistory">
-                        <div th:replace="account/fragments/history :: history">history</div>
+                        <div th:replace="account/fragments/history :: history"></div>
                     </div>
 
                     <!--<div id="profileSideBarContainerToReplace">-->
-                        <!--<h1>Simple Sidebar</h1>-->
-                        <!--<p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>-->
-                        <!--<p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>-->
+                    <!--<h1>Simple Sidebar</h1>-->
+                    <!--<p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>-->
+                    <!--<p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>-->
                     <!--</div>-->
                 </div>
             </div>
@@ -119,12 +117,10 @@
     </div>
     <!-- /#page-content-wrapper -->
 
-    <div th:replace="fragments/footer :: footer">&copy; 2013 The Static Templates</div>
-</div>
+</section>
 <!-- /#wrapper -->
 
 
-<!-- Menu Toggle Script -->
 
 
 </body>

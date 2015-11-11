@@ -31,8 +31,8 @@ public class TaskScheduler {
         Date now = new Date();
         for (Service service : allServices) {
             if (service.getIsActive() == 1 &&
-                (service.getBiddingDeadline().before(now) ||
-                        service.getBiddingDeadline().equals(now))) {
+                    (service.getBiddingDeadline().before(now) ||
+                            service.getBiddingDeadline().equals(now))) {
                 service.setIsActive(0);
             }
         }
