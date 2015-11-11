@@ -30,7 +30,7 @@ class AccountController {
     public Account accounts(Principal principal) {
         Assert.notNull(principal);
         Account account = accountRepository.findFirstByEmail(principal.getName());
-        //account.getAddresses().size();
+
         return account;
     }
 }
