@@ -1,5 +1,6 @@
 package etu.upmc.fr.controller;
 
+import etu.upmc.fr.annotations.SearchParams;
 import etu.upmc.fr.entity.Account;
 import etu.upmc.fr.annotations.GetAccount;
 import etu.upmc.fr.exception.InvalidOperationException;
@@ -11,6 +12,8 @@ import etu.upmc.fr.repository.StateRepository;
 import etu.upmc.fr.entity.Category;
 import etu.upmc.fr.entity.Service;
 import etu.upmc.fr.entity.State;
+import etu.upmc.fr.search.ServiceSearch;
+import etu.upmc.fr.search.ServiceSpecification;
 import etu.upmc.fr.support.web.MessageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -80,9 +83,12 @@ public class ServiceController {
         model.addAttribute("account", account);
     }
 
-    @RequestMapping(value = "service", method = RequestMethod.GET)
-    public String list(Model model, Pageable pageable) {
-        model.addAttribute("services", serviceRepository.findAll(pageable));
+    @RequestMapping(value = "service")
+    public String list(Model model, @SearchParams ServiceSearch serviceSearch, Pageable pageable) {
+        ServiceSpecification spec = new ServiceSpecification(serviceSearch);
+        model.addAttribute("services", serviceRepository.findAll(spec, pageable));
+        model.addAttribute("serviceSearch", serviceSearch);
+        model.addAttribute("categories", categoryRepository.findAll());
 
         return LIST_VIEW_NAME;
     }
