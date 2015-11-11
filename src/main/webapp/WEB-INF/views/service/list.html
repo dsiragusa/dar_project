@@ -12,7 +12,7 @@
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}})">&nbsp;</div>
     </th:block>
 
-    <form class="form-horizontal" method="post" th:action="@{/service}" th:object="${serviceSearch}">
+    <form class="form-horizontal" method="get" th:action="@{/service}" th:object="${serviceSearch}">
         <!--/* Show general error message when form contains errors */-->
         <th:block th:if="${#fields.hasErrors('${serviceSearch.*}')}">
             <div th:replace="fragments/alert :: alert (type='danger', message='Form contains errors. Please try again.')">Alert</div>
