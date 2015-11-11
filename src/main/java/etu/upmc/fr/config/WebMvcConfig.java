@@ -6,6 +6,7 @@ import etu.upmc.fr.annotations.SearchParamsArgumentResolver;
 import etu.upmc.fr.format.AddressFormatter;
 import etu.upmc.fr.format.CategoryFormatter;
 import etu.upmc.fr.format.TagFormatter;
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.MessageSource;
@@ -96,8 +97,10 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
         templateEngine.addDialect(new SpringSecurityDialect());
+        templateEngine.addDialect(new LayoutDialect());
         return templateEngine;
     }
+
 
     @Bean
     public ThymeleafViewResolver viewResolver() {

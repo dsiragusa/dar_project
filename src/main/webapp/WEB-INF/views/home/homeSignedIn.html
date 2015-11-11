@@ -1,23 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorator="layout/default">
 <head>
     <title th:text="#{view.index.title}">Welcome!</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
-    <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+
 </head>
 <body>
-<div th:replace="fragments/header :: header">&nbsp;</div>
-<div class="container">
+<section layout:fragment="content">
     <!-- /* Handle the flash message */-->
     <th:block th:if="${message != null}">
         <!-- /* The message code is returned from the @Controller */ -->
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
     </th:block>
     <p>
-        Welcome to the Spring MVC Quickstart application!
+        Welcome to Service In Paris !
+        Need something to be done ? Find someone to do it. Legal stuff only.
     </p>
     <p>
         <a th:href="@{/service/create}">Request a service</a>
@@ -25,6 +23,6 @@
     <p>
         <a th:href="@{/service}">List services</a>
     </p>
-</div>
+</section>
 </body>
 </html>
