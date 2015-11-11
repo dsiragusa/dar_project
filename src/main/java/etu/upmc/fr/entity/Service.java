@@ -1,12 +1,8 @@
-package etu.upmc.fr.service;
+package etu.upmc.fr.entity;
 
-import etu.upmc.fr.account.Account;
-import etu.upmc.fr.address.Address;
 import etu.upmc.fr.annotations.MyDateTime;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -82,6 +78,22 @@ public class Service {
         return states;
     }
 
+    public State getCurrentState() {
+        return states.get(states.size() - 1);
+    }
+
+    public boolean canBid(Account offeror) {
+        if (offeror.equals(requestor)) {
+            return false;
+        }
+
+        if ( ! getCurrentState().getCode().equals(State.BIDDING)) {
+            return false;
+        }
+
+        return true;
+    }
+
     public void setStates(List<State> states) {
         this.states = states;
     }
@@ -103,14 +115,8 @@ public class Service {
     }
 
     public void addOfferor(Account offeror) throws Exception {
-        if (offeror.equals(requestor)) {
-            throw new Exception("Contractor cannot be the same account as requestor");
-        }
-
-        State current = states.get(states.size() - 1);
-
-        if ( ! current.getCode().equals(State.BIDDING)) {
-            throw new Exception("Bidding phase has expired");
+        if ( ! canBid(offeror)) {
+            throw new Exception("Cannot bid for this request");
         }
 
         this.offerors.add(offeror);

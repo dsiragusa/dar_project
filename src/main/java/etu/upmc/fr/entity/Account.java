@@ -1,13 +1,10 @@
-package etu.upmc.fr.account;
+package etu.upmc.fr.entity;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import etu.upmc.fr.address.Address;
 import etu.upmc.fr.annotations.MyDateTime;
-import etu.upmc.fr.service.Service;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;

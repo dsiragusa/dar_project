@@ -1,4 +1,4 @@
-package etu.upmc.fr.service;
+package etu.upmc.fr.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

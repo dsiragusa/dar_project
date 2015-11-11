@@ -1,8 +1,7 @@
 package etu.upmc.fr.format;
 
-import etu.upmc.fr.address.Address;
-import etu.upmc.fr.service.Category;
-import etu.upmc.fr.service.CategoryRepository;
+import etu.upmc.fr.entity.Category;
+import etu.upmc.fr.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
 import org.springframework.format.Formatter;
@@ -26,7 +25,7 @@ public class CategoryFormatter implements Formatter<Category> {
     public Category parse(String id, Locale locale) throws ParseException {
         try {
             Long lid = Long.parseLong(id);
-            return categoryRepository.findById(lid);
+            return categoryRepository.findOne(lid);
         } catch (Exception e) {
             System.err.println(id);
             e.printStackTrace();

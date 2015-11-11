@@ -4,12 +4,14 @@ import java.util.Collections;
 
 import javax.annotation.PostConstruct;
 
+import etu.upmc.fr.entity.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.*;
+import etu.upmc.fr.repository.AccountRepository;
 
 public class UserService implements UserDetailsService {
 	
@@ -24,7 +26,7 @@ public class UserService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Account account = accountRepository.findByEmail(username);
+		Account account = accountRepository.findFirstByEmail(username);
 		if(account == null) {
 			throw new UsernameNotFoundException("user not found");
 		}

@@ -1,4 +1,4 @@
-package etu.upmc.fr.error;
+package etu.upmc.fr.controller;
 
 import java.text.MessageFormat;
 

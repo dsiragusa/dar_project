@@ -1,13 +1,12 @@
-package etu.upmc.fr.address;
+package etu.upmc.fr.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import etu.upmc.fr.account.Account;
+import etu.upmc.fr.entity.Account;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
-import java.util.Set;
 
 @Entity
 @Table(name = "address")
