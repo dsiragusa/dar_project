@@ -2,9 +2,13 @@ package etu.upmc.fr.config;
 
 import etu.upmc.fr.Application;
 import etu.upmc.fr.annotations.GetAccountArgumentResolver;
+import etu.upmc.fr.annotations.SearchParamsArgumentResolver;
 import etu.upmc.fr.format.AddressFormatter;
 import etu.upmc.fr.format.CategoryFormatter;
+import etu.upmc.fr.format.TagFormatter;
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -59,6 +63,7 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
         argumentResolvers.add(new GetAccountArgumentResolver());
         argumentResolvers.add(new PageableHandlerMethodArgumentResolver());
         argumentResolvers.add(new SortHandlerMethodArgumentResolver());
+        argumentResolvers.add(new SearchParamsArgumentResolver());
     }
 
     @Override
@@ -92,8 +97,10 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
         templateEngine.addDialect(new SpringSecurityDialect());
+        templateEngine.addDialect(new LayoutDialect());
         return templateEngine;
     }
+
 
     @Bean
     public ThymeleafViewResolver viewResolver() {
@@ -124,11 +131,14 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
     AddressFormatter addressFormatter;
     @Autowired
     CategoryFormatter categoryFormatter;
+    @Autowired
+    TagFormatter tagFormatter;
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(addressFormatter);
         registry.addFormatter(categoryFormatter);
+        registry.addFormatter(tagFormatter);
     }
 
     @Override

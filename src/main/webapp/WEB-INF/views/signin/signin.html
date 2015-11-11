@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
 <head>
     <title>Sign In</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
-    <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
 </head>
 <body>
+<section layout:fragment="content">
 <form class="form-narrow form-horizontal" action="#" method="post" th:action="@{/authenticate}">
     <th:block th:if="${param.error != null}">
         <div th:replace="fragments/alert :: alert (type='danger', message='Sign in error. Please try again.')">Alert</div>
@@ -46,5 +46,6 @@
         </div>
     </fieldset>
 </form>
+</section>
 </body>
 </html>

@@ -7,6 +7,7 @@ import etu.upmc.fr.entity.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
@@ -31,7 +32,7 @@ class AccountController {
     public Account accounts(Principal principal) {
         Assert.notNull(principal);
         Account account = accountRepository.findFirstByEmail(principal.getName());
-        //account.getAddresses().size();
+
         return account;
     }
 

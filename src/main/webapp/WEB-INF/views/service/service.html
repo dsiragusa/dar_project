@@ -1,23 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:c="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:c="http://www.w3.org/1999/html"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
 <head>
     <title>Service</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
-    <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
 </head>
-<style>
-    html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
-</style>
 <body>
-    <div th:replace="fragments/header :: header">Header</div>
-    <div class="container">
+    <section layout:fragment="content">
         <div class="row">
             <h1 th:inline="text">Titre: [[${service.title}]]</h1>
             <div class="col-md-3 col-md-offset-9">
@@ -72,7 +61,7 @@
             </div>
         </div>
         <div th:replace="fragments/footer :: footer">&copy; 2013 The Static Templates</div>
-    </div>
+    </section>
     <script>
 
         window.initMap = function () {

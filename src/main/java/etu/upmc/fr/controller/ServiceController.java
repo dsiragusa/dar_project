@@ -1,15 +1,19 @@
 package etu.upmc.fr.controller;
 
+import etu.upmc.fr.annotations.SearchParams;
 import etu.upmc.fr.entity.Account;
 import etu.upmc.fr.annotations.GetAccount;
 import etu.upmc.fr.exception.InvalidOperationException;
 import etu.upmc.fr.exception.ResourceNotFoundException;
+import etu.upmc.fr.notification.NotificationManager;
 import etu.upmc.fr.repository.CategoryRepository;
 import etu.upmc.fr.repository.ServiceRepository;
 import etu.upmc.fr.repository.StateRepository;
 import etu.upmc.fr.entity.Category;
 import etu.upmc.fr.entity.Service;
 import etu.upmc.fr.entity.State;
+import etu.upmc.fr.search.ServiceSearch;
+import etu.upmc.fr.search.ServiceSpecification;
 import etu.upmc.fr.support.web.MessageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +44,9 @@ public class ServiceController {
     @Autowired
     private StateRepository stateRepository;
 
+    @Autowired
+    private NotificationManager notificationManager;
+
     @RequestMapping(value = "service/create")
     public String create(@GetAccount Account account, Model model) {
         model.addAttribute("service", new Service());
@@ -64,7 +71,7 @@ public class ServiceController {
         state.setService(service);
         stateRepository.save(state);
 
-
+        notificationManager.sendNewServiceConfirmationNotification(service);
         MessageHelper.addSuccessAttribute(ra, "service.creation.success");
         return "redirect:/service";
     }
@@ -76,9 +83,12 @@ public class ServiceController {
         model.addAttribute("account", account);
     }
 
-    @RequestMapping(value = "service", method = RequestMethod.GET)
-    public String list(Model model, Pageable pageable) {
-        model.addAttribute("services", serviceRepository.findAll(pageable));
+    @RequestMapping(value = "service")
+    public String list(Model model, @SearchParams ServiceSearch serviceSearch, Pageable pageable) {
+        ServiceSpecification spec = new ServiceSpecification(serviceSearch);
+        model.addAttribute("services", serviceRepository.findAll(spec, pageable));
+        model.addAttribute("serviceSearch", serviceSearch);
+        model.addAttribute("categories", categoryRepository.findAll());
 
         return LIST_VIEW_NAME;
     }

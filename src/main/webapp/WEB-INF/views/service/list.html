@@ -1,20 +1,48 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
 <head>
     <title th:text="#{view.service.list.title}">Welcome!</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
-    <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
 </head>
 <body>
-<div th:replace="fragments/header :: header">&nbsp;</div>
-<div class="container">
+<section layout:fragment="content">
     <th:block th:if="${message != null}">
         <!-- /* The message code is returned from the @Controller */ -->
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}})">&nbsp;</div>
     </th:block>
+
+    <form class="form-horizontal" method="get" th:action="@{/service}" th:object="${serviceSearch}">
+        <!--/* Show general error message when form contains errors */-->
+        <th:block th:if="${#fields.hasErrors('${serviceSearch.*}')}">
+            <div th:replace="fragments/alert :: alert (type='danger', message='Form contains errors. Please try again.')">Alert</div>
+        </th:block>
+        <fieldset>
+            <div class="form-group" th:classappend="${#fields.hasErrors('title')}? 'has-error'">
+                <label for="title" class="col-md-3 control-label">Title</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="title" placeholder="Title" th:field="*{title}" />
+                    <span class="help-block" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Incorrect</span>
+                </div>
+            </div>
+            <div class="form-group" th:classappend="${#fields.hasErrors('category')}? 'has-error'">
+                <label for="category" class="col-md-3 control-label">Category</label>
+                <div class="col-md-9">
+                    <select class="form-control" id="category" th:field="*{category}">
+                        <option th:value="NULL"></option>
+                        <option th:each="cat : ${categories}" th:value="${{cat}}" th:text="${cat.name}"></option>
+                    </select>
+                    <span class="help-block" th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Incorrect</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-9">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
 
     <ul>
         <li th:each="s : ${services}"><a th:href="@{/service/{id}(id = ${s.id})}" th:text="${s.title}"></a></li>
@@ -23,7 +51,7 @@
     <div class="table-pagination">
         <ul class="pagination">
             <li th:class="${services.isFirst()} ? 'disabled' : ''">
-                <a th:if="${not services.isFirst()}" th:href="@{${'/service'}(page=${services.number-1},size=${services.size})}">Previous</a>
+                <a th:if="${not services.isFirst()}" th:href="@{${'/service'}(page=${services.number-1},size=${services.size})} + ${serviceSearch}">Previous</a>
                 <a th:if="${services.isFirst()}" href="javascript:void(0);">Previous</a>
             </li>
 
@@ -31,17 +59,17 @@
                 <a th:if="${services.number  eq pageNo}" href="javascript:void(0);">
                     <span th:text="${pageNo + 1}"></span>
                 </a>
-                <a th:if="${not (services.number  eq pageNo)}" th:href="@{${'/service'}(page=${pageNo},size=${services.size})}">
+                <a th:if="${not (services.number  eq pageNo)}" th:href="@{${'/service'}(page=${pageNo},size=${services.size})} + ${serviceSearch}">
                     <span th:text="${pageNo + 1}"></span>
                 </a>
 
             </li>
             <li th:class="${not services.hasNext()} ? 'disabled' : ''">
-                <a th:if="${services.hasNext()}" th:href="@{${'/service'}(page=${services.number+1},size=${services.size})}">Next</a>
+                <a th:if="${services.hasNext()}" th:href="@{${'/service'}(page=${services.number+1},size=${services.size})} + ${serviceSearch}">Next</a>
                 <a th:if="${not services.hasNext()}" href="javascript:void(0);">Next</a>
             </li>
         </ul>
     </div>
-</div>
+</section>
 </body>
 </html>
