@@ -1,34 +1,42 @@
 package etu.upmc.fr.TaskScheduler;
 
-import org.springframework.scheduling.TaskScheduler;
+import etu.upmc.fr.entity.Service;
+import etu.upmc.fr.repository.ServiceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by iShavgula on 11/11/15.
  */
+@Component
 public class TaskScheduler {
 
-    private class MessagePrinterTask implements Runnable {
+    @Autowired
+    private ServiceRepository serviceRepository;
 
-        private String message;
-        public MessagePrinterTask(String message) {
-            this.message = message;
-        }
-
-        public void run() {
-            taskScheduler.scheduleWithFixedDelay()
-        }
+    public TaskScheduler() {
 
     }
 
-    private org.springframework.scheduling.TaskScheduler taskScheduler;
+    @Scheduled(fixedDelay=10000)
+    public void checkDeadlines() {
+        List<Service> allServices = serviceRepository.findAll();
+        Collections.sort(allServices);
 
-    public TaskScheduler(org.springframework.scheduling.TaskScheduler taskScheduler) {
-        this.taskScheduler = taskScheduler;
-    }
-
-    public void printMessages() {
-        for(int i = 0; i < 25; i++) {
-            taskExecutor.execute(new MessagePrinterTask("Message" + i));
+        Date now = new Date();
+        for (Service service : allServices) {
+            if (service.getIsActive() == 1 &&
+                    (service.getBiddingDeadline().before(now) ||
+                            service.getBiddingDeadline().equals(now))) {
+                service.setIsActive(0);
+            }
         }
+
+        serviceRepository.save(allServices);
     }
 }
