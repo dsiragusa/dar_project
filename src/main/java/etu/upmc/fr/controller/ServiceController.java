@@ -4,6 +4,7 @@ import etu.upmc.fr.entity.Account;
 import etu.upmc.fr.annotations.GetAccount;
 import etu.upmc.fr.exception.InvalidOperationException;
 import etu.upmc.fr.exception.ResourceNotFoundException;
+import etu.upmc.fr.notification.NotificationManager;
 import etu.upmc.fr.repository.CategoryRepository;
 import etu.upmc.fr.repository.ServiceRepository;
 import etu.upmc.fr.repository.StateRepository;
@@ -40,6 +41,9 @@ public class ServiceController {
     @Autowired
     private StateRepository stateRepository;
 
+    @Autowired
+    private NotificationManager notificationManager;
+
     @RequestMapping(value = "service/create")
     public String create(@GetAccount Account account, Model model) {
         model.addAttribute("service", new Service());
@@ -64,7 +68,7 @@ public class ServiceController {
         state.setService(service);
         stateRepository.save(state);
 
-
+        notificationManager.sendNewServiceConfirmationNotification(service);
         MessageHelper.addSuccessAttribute(ra, "service.creation.success");
         return "redirect:/service";
     }
