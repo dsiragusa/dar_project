@@ -1,19 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
 <head>
-
     <title>Profile</title>
+    <link th:href="@{/resources/css/simple-sidebar.css}" rel="stylesheet" media="screen" />
 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
-    <link href="../../../resources/css/simple-sidebar.css" rel="stylesheet" media="screen" th:href="@{/resources/css/simple-sidebar.css}"/>
-    <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
 </head>
-<body style="margin-top: -10px;">
-<div th:replace="fragments/header :: header">Header</div>
-<div id="wrapper">
+<body >
+<section layout:fragment="content">
 
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
@@ -50,7 +45,7 @@
                     <a href="#menu-toggle" class="btn btn-default glyphicon glyphicon-list" id="menu-toggle"></a>
 
                     <div id="itemInformations">
-                        <div th:replace="account/fragments/informations :: informations (account=${account})">informations</div>
+                        <div th:replace="account/fragments/informations :: informations(account=${account})">informations</div>
                     </div>
                     <div style="display: none;" id="itemReviews">
                         <div th:replace="account/fragments/reviews :: reviews">reviews</div>
@@ -76,8 +71,7 @@
     </div>
     <!-- /#page-content-wrapper -->
 
-    <div th:replace="fragments/footer :: footer">&copy; 2013 The Static Templates</div>
-</div>
+</section>
 <!-- /#wrapper -->
 
 

@@ -36,7 +36,9 @@ class AccountController {
         return account;
     }
 
-    @RequestMapping(value = "account/profile", method = RequestMethod.GET)
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "profile", method = RequestMethod.GET)
     public String profile(@GetAccount Account account, Model model) {
         model.addAttribute("account", account);
 
