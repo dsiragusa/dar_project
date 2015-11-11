@@ -7,6 +7,39 @@
     <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+
+    <script>
+        function validateEmail(email) {
+            var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+            return re.test(email);
+        }
+
+        function checkEmailExists() {
+            var email = $("#email").val();
+            if (!validateEmail(email)) {
+                document.getElementById("email_ok").style.display = "none";
+                document.getElementById("email_bad").style.display = "none";
+                return;
+            }
+            $.get("/account/checkemail?email=" + email, function (responseText) {   // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
+                alert(responseText);
+                if (responseText == "1") {
+                    document.getElementById("email_ok").style.display = "none";
+                    document.getElementById("email_bad").style.display = "inline";
+                    return true;
+                }
+
+                document.getElementById("email_bad").style.display = "none";
+                document.getElementById("email_ok").style.display = "inline";
+                return true;
+            });
+        }
+
+        $(document).ready(function () {
+            $("#email").keyup(checkEmailExists);
+        });
+    </script>
+
 </head>
 <body>
 <form class="form-narrow form-horizontal" method="post" th:action="@{/signup}" th:object="${account}">
@@ -21,6 +54,8 @@
             <div class="col-md-9">
                 <input type="text" class="form-control" id="email" placeholder="Email address" th:field="*{email}" />
                 <span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect email</span>
+                <span class="glyphicon glyphicon-remove" style="color: red; display: none;" id="email_bad"/>
+                <span class="glyphicon glyphicon-ok" style="color: green; display: none;" id="email_ok"/>
             </div>
         </div>
         <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error'">

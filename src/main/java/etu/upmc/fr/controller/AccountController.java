@@ -2,21 +2,22 @@ package etu.upmc.fr.controller;
 
 import java.security.Principal;
 
+import etu.upmc.fr.annotations.GetAccount;
 import etu.upmc.fr.entity.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import etu.upmc.fr.repository.AccountRepository;
 
 @Controller
 @Secured("ROLE_USER")
 class AccountController {
+    private static final String PROFILE_VIEW_NAME = "account/profile";
+
 
     @Autowired
     private AccountRepository accountRepository;
@@ -32,5 +33,21 @@ class AccountController {
         Account account = accountRepository.findFirstByEmail(principal.getName());
         //account.getAddresses().size();
         return account;
+    }
+
+    @RequestMapping(value = "account/profile", method = RequestMethod.GET)
+    public String profile(@GetAccount Account account, Model model) {
+        model.addAttribute("account", account);
+
+        return PROFILE_VIEW_NAME;
+    }
+
+
+    @RequestMapping(value = "account/emailexists", method = RequestMethod.GET)
+    public @ResponseBody String emailExists(String email) {
+        Assert.notNull(email);
+        Account account = accountRepository.findFirstByEmail(email);
+
+        return account == null ? "1" : "0";
     }
 }

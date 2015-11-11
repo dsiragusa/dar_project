@@ -1,10 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+
+    <title>Profile</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
+    <link href="../../../resources/css/simple-sidebar.css" rel="stylesheet" media="screen" th:href="@{/resources/css/simple-sidebar.css}"/>
+    <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
 </head>
-<body>
+<body style="margin-top: -10px;">
+<div th:replace="fragments/header :: header">Header</div>
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand">
+                <a href="#">
+                    Start Bootstrap
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="loadProfileItem(1);">Informations</a>
+            </li>
+            <li>
+                <a href="#" onclick="loadProfileItem(2);">Avies d'utilisateurs</a>
+            </li>
+            <li>
+                <a href="#" onclick="loadProfileItem(3);">Demandes en cours</a>
+            </li>
+            <li>
+                <a href="#" onclick="loadProfileItem(4);">Mes candidatures</a>
+            </li>
+            <li>
+                <a href="#" onclick="loadProfileItem(5);">Services passées</a>
+            </li>
+        </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <a href="#menu-toggle" class="btn btn-default glyphicon glyphicon-list" id="menu-toggle"></a>
+
+                    <div id="itemInformations">
+                        <div th:replace="account/fragments/informations :: informations (account=${account})">informations</div>
+                    </div>
+                    <div style="display: none;" id="itemReviews">
+                        <div th:replace="account/fragments/reviews :: reviews">reviews</div>
+                    </div>
+                    <div style="display: none;" id="itemPending">
+                        <div th:replace="account/fragments/pending :: pending">pending</div>
+                    </div>
+                    <div style="display: none;" id="itemApplications">
+                        <div th:replace="account/fragments/applications :: applications">applications</div>
+                    </div>
+                    <div style="display: none;" id="itemHistory">
+                        <div th:replace="account/fragments/history :: history">history</div>
+                    </div>
+
+                    <!--<div id="profileSideBarContainerToReplace">-->
+                        <!--<h1>Simple Sidebar</h1>-->
+                        <!--<p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>-->
+                        <!--<p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+    <div th:replace="fragments/footer :: footer">&copy; 2013 The Static Templates</div>
+</div>
+<!-- /#wrapper -->
+
+
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
+
+<script>
+    function loadProfileItem(index) {
+        hideAll();
+        switch (index) {
+            case 1:
+                document.getElementById('itemInformations').style.display = "inline";
+                break;
+
+            case 2:
+                document.getElementById('itemReviews').style.display = "inline";
+                break;
+
+            case 3:
+                document.getElementById('itemPending').style.display = "inline";
+                break;
+
+            case 4:
+                document.getElementById('itemApplications').style.display = "inline";
+                break;
+
+            case 5:
+                document.getElementById('itemHistory').style.display = "inline";
+                break;
+        }
+    }
+
+    function hideAll() {
+        document.getElementById('itemInformations').style.display = "none";
+        document.getElementById('itemReviews').style.display = "none";
+        document.getElementById('itemPending').style.display = "none";
+        document.getElementById('itemApplications').style.display = "none";
+        document.getElementById('itemHistory').style.display = "none";
+    }
+</script>
 
 </body>
 </html>
