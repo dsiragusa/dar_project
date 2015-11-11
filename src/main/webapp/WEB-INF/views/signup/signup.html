@@ -4,12 +4,6 @@
         layout:decorator="layout/default">
 <head>
     <title>Signup</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
-    <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
-
     <script>
         function validateEmail(email) {
             var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
@@ -41,9 +35,9 @@
             $("#email").keyup(checkEmailExists);
         });
     </script>
-
 </head>
 <body>
+<section layout:fragment="content">
 <form class="form-narrow form-horizontal" method="post" th:action="@{/signup}" th:object="${account}">
     <!--/* Show general error message when form contains errors */-->
     <th:block th:if="${#fields.hasErrors('${account.*}')}">
@@ -123,6 +117,7 @@
                 <div class="col-md-offset-3 col-md-9">
                     <p>Already have an account? <a href="signin" th:href="@{/signin}">Sign In</a></p>
                 </div>
+            </div>
             </div>
         </fieldset>
     </form>
