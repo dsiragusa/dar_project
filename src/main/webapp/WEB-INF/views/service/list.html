@@ -19,6 +19,29 @@
     <ul>
         <li th:each="s : ${services}"><a th:href="@{/service/{id}(id = ${s.id})}" th:text="${s.title}"></a></li>
     </ul>
+
+    <div class="table-pagination">
+        <ul class="pagination">
+            <li th:class="${services.isFirst()} ? 'disabled' : ''">
+                <a th:if="${not services.isFirst()}" th:href="@{${'/service'}(page=${services.number-1},size=${services.size})}">Previous</a>
+                <a th:if="${services.isFirst()}" href="javascript:void(0);">Previous</a>
+            </li>
+
+            <li th:each="pageNo : ${#numbers.sequence(0, services.totalPages - 1)}" th:class="${services.number eq pageNo}? 'active' : ''">
+                <a th:if="${services.number  eq pageNo}" href="javascript:void(0);">
+                    <span th:text="${pageNo + 1}"></span>
+                </a>
+                <a th:if="${not (services.number  eq pageNo)}" th:href="@{${'/service'}(page=${pageNo},size=${services.size})}">
+                    <span th:text="${pageNo + 1}"></span>
+                </a>
+
+            </li>
+            <li th:class="${not services.hasNext()} ? 'disabled' : ''">
+                <a th:if="${services.hasNext()}" th:href="@{${'/service'}(page=${services.number+1},size=${services.size})}">Next</a>
+                <a th:if="${not services.hasNext()}" href="javascript:void(0);">Next</a>
+            </li>
+        </ul>
+    </div>
 </div>
 </body>
 </html>
