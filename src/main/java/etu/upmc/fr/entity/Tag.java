@@ -1,6 +1,4 @@
-package etu.upmc.fr.service;
-
-import org.hibernate.annotations.SortComparator;
+package etu.upmc.fr.entity;
 
 import javax.persistence.*;
 import java.util.Set;

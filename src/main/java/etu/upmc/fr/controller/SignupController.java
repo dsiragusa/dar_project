@@ -1,10 +1,10 @@
-package etu.upmc.fr.signup;
+package etu.upmc.fr.controller;
 
-import etu.upmc.fr.account.Account;
-import etu.upmc.fr.account.AccountRepository;
+import etu.upmc.fr.entity.Account;
+import etu.upmc.fr.repository.AccountRepository;
 import etu.upmc.fr.account.UserService;
-import etu.upmc.fr.address.Address;
-import etu.upmc.fr.address.AddressRepository;
+import etu.upmc.fr.entity.Address;
+import etu.upmc.fr.repository.AddressRepository;
 import etu.upmc.fr.support.web.MessageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,7 +43,7 @@ public class SignupController {
 			return SIGNUP_VIEW_NAME;
 		}
 
-		account = accountRepository.save(account);
+		account = accountRepository.saveAndCryptPassword(account);
 
 		Address address = account.getAddresses().get(0);
 		address.setAccount(account);

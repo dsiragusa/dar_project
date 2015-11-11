@@ -1,14 +1,12 @@
 package etu.upmc.fr.format;
 
-import etu.upmc.fr.address.Address;
-import etu.upmc.fr.address.AddressRepository;
+import etu.upmc.fr.entity.Address;
+import etu.upmc.fr.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.Locale;
 
 /**
@@ -26,7 +24,7 @@ public class AddressFormatter implements Formatter<Address> {
 
     public Address parse(String id, Locale locale) throws ParseException {
         try {
-            return addressRepository.findById(Long.parseLong(id));
+            return addressRepository.findOne(Long.parseLong(id));
 
         } catch (Exception e) {
             throw new ParseException(-1, "invalid id");

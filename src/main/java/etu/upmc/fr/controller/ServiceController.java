@@ -1,10 +1,15 @@
-package etu.upmc.fr.service;
+package etu.upmc.fr.controller;
 
-import etu.upmc.fr.account.Account;
-import etu.upmc.fr.account.AccountRepository;
+import etu.upmc.fr.entity.Account;
 import etu.upmc.fr.annotations.GetAccount;
 import etu.upmc.fr.exception.InvalidOperationException;
 import etu.upmc.fr.exception.ResourceNotFoundException;
+import etu.upmc.fr.repository.CategoryRepository;
+import etu.upmc.fr.repository.ServiceRepository;
+import etu.upmc.fr.repository.StateRepository;
+import etu.upmc.fr.entity.Category;
+import etu.upmc.fr.entity.Service;
+import etu.upmc.fr.entity.State;
 import etu.upmc.fr.support.web.MessageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,7 +69,7 @@ public class ServiceController {
     }
 
     private void populateServiceForm(Model model, Account account) {
-        categoryRepository.generateCategories();
+        generateCategories();
 
         model.addAttribute("categories", categoryRepository.findAll());
         model.addAttribute("account", account);
@@ -72,7 +77,7 @@ public class ServiceController {
 
     @RequestMapping(value = "service", method = RequestMethod.GET)
     public String list(Model model) {
-        List<Service> services = serviceRepository.findAll();
+        List<Service> services = (List<Service>) serviceRepository.findAll();
 
         model.addAttribute("services", services);
 
@@ -81,7 +86,7 @@ public class ServiceController {
 
     @RequestMapping(value = "service/{service}", method = RequestMethod.GET)
     public String details(Model model, @PathVariable("service") Long id, @GetAccount Account account) {
-        Service service = serviceRepository.findById(id);
+        Service service = serviceRepository.findOne(id);
 
         if (service == null) {
             throw new ResourceNotFoundException();
@@ -95,7 +100,7 @@ public class ServiceController {
 
     @RequestMapping(value = "service/{service}", method = RequestMethod.POST)
     public String apply(Model model, @PathVariable("service") Long id, @GetAccount Account account, RedirectAttributes ra) {
-        Service service = serviceRepository.findById(id);
+        Service service = serviceRepository.findOne(id);
 
         if (service == null) {
             throw new ResourceNotFoundException();
@@ -104,16 +109,26 @@ public class ServiceController {
         try {
             service.addOfferor(account);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new InvalidOperationException();
         }
 
-        serviceRepository.update(service);
+        serviceRepository.save(service);
 
         MessageHelper.addSuccessAttribute(ra, "service.apply.success");
 
         return "redirect:/service";
     }
 
+    private void generateCategories() {
+        List<Category> categories = (List<Category>) categoryRepository.findAll();
+
+        if (categories.isEmpty()) {
+            for (int i = 0; i < 5; i++) {
+                Category category = new Category();
+                category.setName("Category " + i);
+                categoryRepository.save(category);
+            }
+        }
+    }
 
 }

@@ -1,4 +1,4 @@
-package etu.upmc.fr.home;
+package etu.upmc.fr.controller;
 
 import java.security.Principal;
 

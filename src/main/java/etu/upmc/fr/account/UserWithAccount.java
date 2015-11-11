@@ -1,5 +1,6 @@
 package etu.upmc.fr.account;
 
+import etu.upmc.fr.entity.Account;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
