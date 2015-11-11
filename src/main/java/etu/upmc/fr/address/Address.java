@@ -108,4 +108,17 @@ public class Address {
     public void setMain(Boolean main) {
         this.main = main;
     }
+
+    @Override
+    public String toString() {
+        String s = line1 + " ";
+
+        if ( ! line2.isEmpty()) {
+            s += line2 + " ";
+        }
+
+        s += city + " " + zip + " " + country;
+
+        return s;
+    }
 }

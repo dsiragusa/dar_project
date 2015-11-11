@@ -7,7 +7,6 @@
     <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1d-ntv8DXxJvj6eOr2RMK5Wo5qVrWcUw&signed_in=true&callback=initMap" async defer></script>
 </head>
 <style>
     html, body {
@@ -15,79 +14,78 @@
         margin: 0;
         padding: 0;
     }
-    #map {
-        height: 100%;
-        width: 100%;
-    }
 </style>
 <body>
     <div th:replace="fragments/header :: header">Header</div>
-    <div class="container" style="height: 100%; width: 100;">
-        <div>
-            <p>Titre: <span th:text="${service.title}"></span></p>
+    <div class="container">
+        <div class="row">
+            <h1 th:inline="text">Titre: [[${service.title}]]</h1>
+            <div class="col-md-3 col-md-offset-9">
+                <form th:action="@{/service/{id}(id = ${service.id})}" method="post">
+                    <button type="submit" >Rendre service !</button>
+                </form>
+            </div>
         </div>
-        <div>
-            <p>Prix: <span th:text="${service.price}"></span></p>
-        </div>
-        <div>
-            <button type="submit" >Rendre service !</button>
-        </div>
-        <div>
+        <div class="row">
             <p>Description: <span th:text="${service.description}"></span></p>
         </div>
-        <div id="directions" style="height: 100%; width: 100;">
-            <b>Départ:</b>
-            <br />
-            <input id="start" type="text">
-            <br />
-            <i>Adresses favorites:</i>
-            <br />
-            <select id="favorites" th:each="address : ${account.addresses}">
-                <option th:value="${address.line1} + ${address.line2} + ${address.zip} + ${address.city} + ${address.country}"><span th:text="${address.name}"></span></option>
-            </select>
-            <br />
-            <b>Lieu d'achat:</b>
-            <br />
-            <p><span id="waypoint" th:text="${service.biddingPlaceAdresse}"></span></p>
-            <br />
-            <b>Lieu de rendez-vous:</b>
-            <br />
-            <p><span id="end" th:text="${service.rendezVousPlaceAdresse}"></span></p>
-            <br />
-            <b>Moyen de transport:</b>
-            <br />
-            <select id="travelMode">
-                <option value="transit">Transports en commun</option>
-                <option value="walking">A pied</option>
-                <option value="bicycling">En vélo</option>
-                <option value="driving">En véhicule</option>
-            </select>
-            <br />
-            <br />
-            <input type="submit" id="submit" value="Calculer itinéraire !">
-            <div id="map"></div>
+        <div id="directions" class="row">
+            <div class="col-md-3">
+                <b>Départ:</b>
+                <br />
+                <input id="start" type="text" />
+                <br />
+            </div>
+            <div class="col-md-6">
+                <i>Adresses favorites:</i>
+                <br />
+                <select id="favorites" th:each="address : ${account.addresses}">
+                    <option th:value="${address}"><span th:text="${address.name}"></span></option>
+                </select>
+                <br />
+                <!--
+                <b>Lieu d'achat:</b>
+                <br />
+                <p><span id="waypoint" th:text="${service.biddingPlaceAdresse}"></span></p>
+                <br />
+                -->
+            </div>
+            <div class="col-md-6">
+                <b>Lieu de rendez-vous:</b>
+                <br />
+                <p><span id="end" th:text="${service.address.line1 + ' ' + service.address.line2 + ' ' + service.address.city + ' ' + service.address.zip}"></span></p>
+                <br />
+                <b>Moyen de transport:</b>
+                <br />
+                <select id="travelMode">
+                    <option value="transit">Transports en commun</option>
+                    <option value="walking">A pied</option>
+                    <option value="bicycling">En vélo</option>
+                    <option value="driving">En véhicule</option>
+                </select>
+                <br />
+                <br />
+                <input type="submit" id="submit" value="Calculer itinéraire !" />
+            </div>
+            <div class="col-md-12">
+                <div id="map"></div>
+            </div>
         </div>
         <div th:replace="fragments/footer :: footer">&copy; 2013 The Static Templates</div>
     </div>
     <script>
-        var favorites = document.getElementById ('favorites');
 
-        favorites.onclick = function () {
-            var value = favorites.options[favorites.selectedIndex].value;
-            if(value != "")
-                document.getElementById('start').value = value;
-        }
-
-        var directionsService;
-        var directionsDisplay;
-
-        function initMap() {
+        window.initMap = function () {
             directionsService = new google.maps.DirectionsService;
             directionsDisplay = new google.maps.DirectionsRenderer;
+
             var element = document.getElementById('map');
+
+            $(element).css('height', '500px');
 
             var map = new google.maps.Map(element, {
                 zoom: 12,
+                scrollwheel: false,
                 center: {lat: 48.85661, lng: 2.35222}
             });
             directionsDisplay.setMap(map);
@@ -95,58 +93,36 @@
             document.getElementById('submit').addEventListener('click', function() {
                 calculateAndDisplayRoute(directionsService, directionsDisplay);
             });
-        }
-
-        var onChangeHandler = function()
-        {
-            calculateAndDisplayRoute(directionsService, directionsDisplay);
         };
 
-        document.getElementById('travelMode').addEventListener('change', onChangeHandler);
 
-        function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+        function calculateAndDisplayRoute() {
 
+            /*
             var waypoint = document.getElementById('waypoint').innerHTML;
 
-            var waypointArray = new Array();
+            var waypointArray = [];
 
             if(waypoint != "") {
                 var temp = {location: waypoint, stopover: true};
                 waypointArray.push(temp);
             }
+            */
 
-            var travelElement = document.getElementById('travelMode');
-
-            var travelMode;
-
-            switch(travelElement.options[travelElement.selectedIndex].value) {
-                case "transit":
-                    travelMode = google.maps.TravelMode.TRANSIT;
-                    break;
-
-                case "driving":
-                    travelMode = google.maps.TravelMode.DRIVING;
-                    break;
-
-                case "bicycling":
-                    travelMode = google.maps.TravelMode.BICYCLING;
-                    break;
-
-                case "walking":
-                    travelMode = google.maps.TravelMode.WALKING;
-                    break;
-
-                default:
-                    travelMode = google.maps.TravelMode.DRIVING;
-                    break;
-            }
+            var travelMode = {
+                transit : google.maps.TravelMode.TRANSIT,
+                driving : google.maps.TravelMode.DRIVING,
+                bicycling : google.maps.TravelMode.BICYCLING,
+                walking : google.maps.TravelMode.WALKING
+            };
+            var selectedTravelMode = travelMode[$('#travelMode').val()];
 
             directionsService.route({
                 origin: document.getElementById('start').value,
                 destination: document.getElementById('end').innerHTML,
-                waypoints: waypointArray,
+                //waypoints: waypointArray,
                 optimizeWaypoints: true,
-                travelMode: travelMode
+                travelMode: selectedTravelMode
             }, function(response, status) {
                 if (status === google.maps.DirectionsStatus.OK) {
                     directionsDisplay.setDirections(response);
@@ -155,6 +131,18 @@
                 }
             });
         }
-</script>
+
+        $(document).ready(function() {
+            $('#favorites').change(function (event) {
+                $('#start').val($(this).val());
+
+                calculateAndDisplayRoute();
+            });
+
+            $('#travelMode').change(calculateAndDisplayRoute);
+
+        });
+    </script>
+    <script th:src="@{https://maps.googleapis.com/maps/api/js(key = 'AIzaSyC1d-ntv8DXxJvj6eOr2RMK5Wo5qVrWcUw', signed_in = 'true', callback = 'initMap')}" async="async" defer="defer"></script>
 </body>
 </html>

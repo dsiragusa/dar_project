@@ -33,6 +33,12 @@ public class GenericRepository<T> {
     }
 
     @Transactional
+    public void update(T t) {
+        entityManager.merge(t);
+        entityManager.flush();
+    }
+
+    @Transactional
     public T findById(Long id) {
         try {
             return entityManager.createQuery(selectFrom + "where t.id = :id", tClass)
@@ -99,6 +105,8 @@ public class GenericRepository<T> {
                 sb.append(" and ");
             }
         }
+
+        sb.append(" and t.address = :address");
 
         Query query = entityManager.createQuery(sb.toString(), tClass);
 
