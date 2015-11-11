@@ -13,9 +13,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.core.Ordered;
+import org.springframework.data.repository.support.DomainClassConverter;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
+import org.springframework.data.web.SortHandlerMethodArgumentResolver;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.format.support.FormattingConversionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -55,6 +58,8 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(new GetAccountArgumentResolver());
+        argumentResolvers.add(new PageableHandlerMethodArgumentResolver());
+        argumentResolvers.add(new SortHandlerMethodArgumentResolver());
     }
 
     @Override
@@ -99,6 +104,11 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
         thymeleafViewResolver.setTemplateEngine(templateEngine());
         thymeleafViewResolver.setCharacterEncoding("UTF-8");
         return thymeleafViewResolver;
+    }
+
+    @Bean
+    public DomainClassConverter<?> domainClassConverter() {
+        return new DomainClassConverter<FormattingConversionService>(mvcConversionService());
     }
 
     @Override

@@ -12,6 +12,7 @@ import etu.upmc.fr.entity.Service;
 import etu.upmc.fr.entity.State;
 import etu.upmc.fr.support.web.MessageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -76,18 +77,14 @@ public class ServiceController {
     }
 
     @RequestMapping(value = "service", method = RequestMethod.GET)
-    public String list(Model model) {
-        List<Service> services = (List<Service>) serviceRepository.findAll();
-
-        model.addAttribute("services", services);
+    public String list(Model model, Pageable pageable) {
+        model.addAttribute("services", serviceRepository.findAll(pageable));
 
         return LIST_VIEW_NAME;
     }
 
-    @RequestMapping(value = "service/{service}", method = RequestMethod.GET)
-    public String details(Model model, @PathVariable("service") Long id, @GetAccount Account account) {
-        Service service = serviceRepository.findOne(id);
-
+    @RequestMapping(value = "service/{id}", method = RequestMethod.GET)
+    public String details(Model model, @PathVariable("id") Service service, @GetAccount Account account) {
         if (service == null) {
             throw new ResourceNotFoundException();
         }
@@ -98,10 +95,8 @@ public class ServiceController {
         return DETAILS_VIEW_NAME;
     }
 
-    @RequestMapping(value = "service/{service}", method = RequestMethod.POST)
-    public String apply(Model model, @PathVariable("service") Long id, @GetAccount Account account, RedirectAttributes ra) {
-        Service service = serviceRepository.findOne(id);
-
+    @RequestMapping(value = "service/{id}", method = RequestMethod.POST)
+    public String apply(Model model, @PathVariable("id") Service service, @GetAccount Account account, RedirectAttributes ra) {
         if (service == null) {
             throw new ResourceNotFoundException();
         }
@@ -119,6 +114,7 @@ public class ServiceController {
         return "redirect:/service";
     }
 
+    //TODO Remove or adapt for prod!!!
     private void generateCategories() {
         List<Category> categories = (List<Category>) categoryRepository.findAll();
 
