@@ -4,7 +4,16 @@
 </head>
 <body>
 <div th:fragment="history" th:align="center">
-    HISTORY !!!
+    <table>
+        <tr>
+            <th>Titre</th>
+            <th>Demandeur</th>
+        </tr>
+        <tr th:each="contract : ${account.contracts}" th:if="${contract.getCurrentState().code == 2}">
+            <td th:text="${contract.title}"></td>
+            <td th:text="${contract.contractor}"></td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>
