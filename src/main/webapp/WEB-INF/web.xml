@@ -7,4 +7,14 @@
     	<!--<location>/generalError</location>-->
 	<!--</error-page>-->
 
+
+	<servlet>
+		<servlet-name>Servlet</servlet-name>
+		<servlet-class>etu.upmc.fr.TaskScheduler.Servlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Servlet</servlet-name>
+		<url-pattern>/servlet</url-pattern>
+	</servlet-mapping>
 </web-app>
