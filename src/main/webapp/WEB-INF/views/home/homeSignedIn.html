@@ -13,16 +13,37 @@
         <!-- /* The message code is returned from the @Controller */ -->
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
     </th:block>
-    <p>
+    <h1>
         Bienvenue sur PariServices !
-        Vous avez besoin de quelque chose ? Trouvez quelqu'un pour vous l'apporter.
+    </h1>
+    <p>
+        ParisService vous permet d'investir vos ressources en temps et en argent tout en rendant service à la communauté parisienne.
     </p>
     <p>
-        <a th:href="@{/service/create}">Demander un service !</a>
+        Du temps libre ? Investissez-le en <a th:href="@{/service}">rendant</a> service à quelqu'un en échange d'une rémunération. Vous devez tout d'abord postuler avant la date limite des candidature. L'auteur de l'annonce choisira alors quelle volontaire il souhaite pour son service. Si vous êtes sélectionné, vous recevrez un mail de confirmation. Attention à bien respecter la date limite pour satisfaire votre client !
     </p>
     <p>
-        <a th:href="@{/service}">Trouver un service a rendre !</a>
+        Vous avez les moyens mais pas le temps pour répondre à un de vos besoins ? <a th:href="@{/service/create}">Demander</a> service à quelqu'un. Créer votre annonce en spécifiant un titre, une adresse de livraison, des tags pour la recherche  ainsi que deux dates limites: une pour la soumission des candidatures et une pour rendre le service. Vous pouvez également spécifier une adresse intermédiaire qui sera reliée au service. Par exemple le lieux ou trouver l'objet dans le cas d'un achat.
     </p>
+    <h3 align="center">
+        Qu'attendez-vous ?
+    </h3>
+    <div clascs="row">
+        <div class="col-md-3 col-md-offset-3">
+            <a th:href="@{/service}"><h3>Rends un Service!</h3></a>
+        </div>
+        <div class="col-md-3">
+            <a th:href="@{/service/create}"><h3>Demande un Service!</h3></a>
+        </div>
+    </div>
+    <table align="center">
+        <th>
+            <td>
+            </td>
+            <td>
+            </td>
+        </th>
+    </table>
 </section>
 </body>
 </html>
