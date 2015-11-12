@@ -45,7 +45,17 @@
                         <option th:value="NULL"></option>
                         <option th:each="ad : ${account.addresses}" th:value="${{ad}}" th:text="${ad.name}"></option>
                     </select>
-                    <span class="help-block" th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Incorrect</span>
+                    <span class="help-block" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Incorrect</span>
+                </div>
+            </div>
+            <div class="form-group" th:classappend="${#fields.hasErrors('tags')}? 'has-error'">
+                <label for="tags" class="col-md-3 control-label">Tags</label>
+                <div class="col-md-9">
+                    <select class="form-control" id="tags" th:field="*{tags}" multiple="multiple" data-tags="true">
+                        <option th:value="NULL"></option>
+                        <option th:each="t : ${tags}" th:value="${{t}}" th:text="${t.name}"></option>
+                    </select>
+                    <span class="help-block" th:if="${#fields.hasErrors('tags')}" th:errors="*{tags}">Incorrect</span>
                 </div>
             </div>
             <div class="form-group" th:classappend="${#fields.hasErrors('biddingDeadline')}? 'has-error'">
@@ -69,6 +79,7 @@
             </div>
         </fieldset>
     </form>
+    <script src="../../../resources/js/tagCreator.js" th:src="@{/resources/js/tagCreator.js}"></script>
 </section>
 </body>
 </html>

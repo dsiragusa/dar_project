@@ -1,16 +1,14 @@
 package etu.upmc.fr.controller;
 
 import etu.upmc.fr.annotations.SearchParams;
-import etu.upmc.fr.entity.Account;
+import etu.upmc.fr.entity.*;
 import etu.upmc.fr.annotations.GetAccount;
 import etu.upmc.fr.exception.InvalidOperationException;
 import etu.upmc.fr.exception.ResourceNotFoundException;
 import etu.upmc.fr.repository.CategoryRepository;
 import etu.upmc.fr.repository.ServiceRepository;
 import etu.upmc.fr.repository.StateRepository;
-import etu.upmc.fr.entity.Category;
-import etu.upmc.fr.entity.Service;
-import etu.upmc.fr.entity.State;
+import etu.upmc.fr.repository.TagRepository;
 import etu.upmc.fr.search.ServiceSearch;
 import etu.upmc.fr.search.ServiceSpecification;
 import etu.upmc.fr.support.web.MessageHelper;
@@ -42,6 +40,9 @@ public class ServiceController {
 
     @Autowired
     private StateRepository stateRepository;
+
+    @Autowired
+    private TagRepository tagRepository;
 
     @RequestMapping(value = "service/create")
     public String create(@GetAccount Account account, Model model) {
@@ -76,6 +77,7 @@ public class ServiceController {
         generateCategories();
 
         model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("tags", tagRepository.findAll());
         model.addAttribute("account", account);
     }
 
@@ -85,6 +87,7 @@ public class ServiceController {
         model.addAttribute("services", serviceRepository.findAll(spec, pageable));
         model.addAttribute("serviceSearch", serviceSearch);
         model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("allTags", tagRepository.findAll());
 
         return LIST_VIEW_NAME;
     }

@@ -27,7 +27,7 @@ public class Service {
     @Length(min = 10)
     private String description;
 
-    @ManyToMany(targetEntity = Tag.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Tag.class, cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Set<Tag> tags;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -72,6 +72,12 @@ public class Service {
 
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
+    }
+
+    public void addTag(Tag tag) {
+        this.tags.add(tag);
+
+        tag.addService(this);
     }
 
     public List<State> getStates() {

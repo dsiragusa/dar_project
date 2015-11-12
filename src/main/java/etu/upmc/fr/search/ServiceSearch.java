@@ -75,7 +75,7 @@ public class ServiceSearch {
                 }
                 empty = false;
 
-                s.append(tagsKey).append("[]=").append(t.getId());
+                s.append(tagsKey).append("=").append(t.getId());
             }
         }
 

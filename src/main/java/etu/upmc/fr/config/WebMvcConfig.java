@@ -58,12 +58,17 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
         return new PropertySourcesPlaceholderConfigurer();
     }
 
+    @Bean
+            public SearchParamsArgumentResolver searchParamsArgumentResolver() {
+        return new SearchParamsArgumentResolver();
+    }
+
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(new GetAccountArgumentResolver());
         argumentResolvers.add(new PageableHandlerMethodArgumentResolver());
         argumentResolvers.add(new SortHandlerMethodArgumentResolver());
-        argumentResolvers.add(new SearchParamsArgumentResolver());
+        argumentResolvers.add(searchParamsArgumentResolver());
     }
 
     @Override
