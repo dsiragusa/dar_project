@@ -12,4 +12,6 @@ public class HomeController {
 	public String index(Principal principal) {
 		return principal != null ? "home/homeSignedIn" : "home/homeNotSignedIn";
 	}
+
+
 }

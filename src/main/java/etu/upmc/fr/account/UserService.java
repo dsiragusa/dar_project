@@ -12,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.*;
 import etu.upmc.fr.repository.AccountRepository;
+import org.springframework.util.Assert;
 
 public class UserService implements UserDetailsService {
 	

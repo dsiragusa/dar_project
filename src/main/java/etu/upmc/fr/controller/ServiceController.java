@@ -3,6 +3,7 @@ package etu.upmc.fr.controller;
 import etu.upmc.fr.annotations.SearchParams;
 import etu.upmc.fr.entity.*;
 import etu.upmc.fr.annotations.GetAccount;
+import etu.upmc.fr.events.OnServiceCreatedEvent;
 import etu.upmc.fr.exception.InvalidOperationException;
 import etu.upmc.fr.exception.ResourceNotFoundException;
 import etu.upmc.fr.repository.CategoryRepository;
@@ -13,6 +14,7 @@ import etu.upmc.fr.search.ServiceSearch;
 import etu.upmc.fr.search.ServiceSpecification;
 import etu.upmc.fr.support.web.MessageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,6 +46,9 @@ public class ServiceController {
     @Autowired
     private TagRepository tagRepository;
 
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
+
     @RequestMapping(value = "service/create")
     public String create(@GetAccount Account account, Model model) {
         model.addAttribute("service", new Service());
@@ -68,6 +73,7 @@ public class ServiceController {
         state.setService(service);
         stateRepository.save(state);
 
+        applicationEventPublisher.publishEvent(new OnServiceCreatedEvent(account, service));
 
         MessageHelper.addSuccessAttribute(ra, "service.creation.success");
         return "redirect:/service";

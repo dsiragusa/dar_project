@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="../../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
+    <link href="../../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="../../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+    <link href="../../../../resources/css/account_informations.css" rel="stylesheet" media="screen" th:href="@{/resources/css/account_informations.css}"/>
+</head>
+<body>
+<div th:fragment="informations" th:align="center">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title" th:inline="text">[[${account.firstName}]] [[${account.lastName}]]</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3 " align="center">
+                                <img alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive"/>
+                            </div>
+
+                            <!--<div class="col-xs-10 col-sm-10 hidden-md hidden-lg"> <br>
+                              <dl>
+                                <dt>DEPARTMENT:</dt>
+                                <dd>Administrator</dd>
+                                <dt>HIRE DATE</dt>
+                                <dd>11/12/2013</dd>
+                                <dt>DATE OF BIRTH</dt>
+                                   <dd>11/12/2013</dd>
+                                <dt>GENDER</dt>
+                                <dd>Male</dd>
+                              </dl>
+                            </div>-->
+                            <div class=" col-md-9 col-lg-9 ">
+                                <table class="table table-user-information">
+                                    <tbody>
+                                    <tr>
+                                        <td>Gender</td>
+                                        <td>Male</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Signup date:</td>
+                                        <td th:text="${account.signupDate}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address line 1</td>
+                                        <td th:text="${account.getAddresses().get(0).getLine1()}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address line 2</td>
+                                        <td th:text="${account.getAddresses().get(0).getLine2()}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>City</td>
+                                        <td th:text="${account.getAddresses().get(0).getCity()}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Zip code</td>
+                                        <td th:text="${account.getAddresses().get(0).getZip()}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Country</td>
+                                        <td th:text="${account.getAddresses().get(0).getCountry()}"></td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer" style="height: 50px;">
+                        <a data-original-title="See addresses" data-toggle="tooltip" type="button" class="btn btn-info btn-md pull-left"><i class="glyphicon glyphicon-globe"></i></a>
+                        <div class="pull-right">
+                            <a href="#" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <!--<div th:replace="account/fragments/addresses :: addresses (addresses=${account.addresses})">addresses</div>-->
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="applications" th:align="center">
+    <table>
+        <tr>
+            <th>Titre</th>
+            <th>Demandeur</th>
+        </tr>
+        <tr th:each="offer : ${account.offers}" th:if="${offer.getCurrentState().code == 0}">
+            <td th:text="${offer.title}"></td>
+            <td th:text="${offer.contractor}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

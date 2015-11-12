@@ -3,6 +3,7 @@ package etu.upmc.fr.config;
 import etu.upmc.fr.Application;
 import etu.upmc.fr.annotations.GetAccountArgumentResolver;
 import etu.upmc.fr.annotations.SearchParamsArgumentResolver;
+import etu.upmc.fr.entity.Account;
 import etu.upmc.fr.format.AddressFormatter;
 import etu.upmc.fr.format.CategoryFormatter;
 import etu.upmc.fr.format.TagFormatter;
@@ -52,6 +53,7 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
 
     private static final String RESOURCES_LOCATION = "/resources/";
     private static final String RESOURCES_HANDLER = RESOURCES_LOCATION + "**";
+
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {

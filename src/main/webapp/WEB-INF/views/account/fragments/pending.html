@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="pending" th:align="center">
+    <table>
+        <tr>
+            <th>Titre</th>
+            <th>Volontaires</th>
+        </tr>
+        <tr th:each="request : ${account.requests}" th:if="${request.getCurrentState().code &lt; 2}">
+            <td th:text="request.title"></td>
+            <td>
+                <ul th:each="offeror : ${request.offerors}">
+                    <li th:text="${offeror}"></li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
