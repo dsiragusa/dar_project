@@ -9,10 +9,12 @@
             <tr>
                 <th>Titre</th>
                 <th>Demandeur</th>
+                <th>Terminée le</th>
             </tr>
             <tr th:each="contract : ${account.contracts}" th:if="${contract.getCurrentState().code == 2}">
                 <td><a th:href="@{/service/{id}(id = ${contract.id})}" th:text="${contract.title}"></a></td>
                 <td th:text="${contract.contractor}"></td>
+                <td th:text="${contract.serviceDeadline}"></td>
             </tr>
         </table>
     </th:block>

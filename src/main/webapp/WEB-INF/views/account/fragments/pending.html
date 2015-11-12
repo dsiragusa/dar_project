@@ -9,6 +9,8 @@
             <tr>
                 <th>Titre</th>
                 <th>Volontaires</th>
+                <th>Date limite pour les proposition</th>
+                <th>Date limite pour le service</th>
             </tr>
             <tr th:each="request : ${account.requests}" th:if="${request.getCurrentState().code &lt; 2}">
                 <td><a th:href="@{/service/{id}(id = ${request.id})}" th:text="${request.title}"></a></td>
@@ -22,6 +24,8 @@
                         Aucun volontaire pour l'instant.
                     </th:block>
                 </td>
+                <td th:text="${request.biddingDeadline}"></td>
+                <td th:text="${request.serviceDeadline}"></td>
             </tr>
         </table>
     </th:block>
