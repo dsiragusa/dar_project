@@ -54,15 +54,7 @@ class AccountController {
 
         return PROFILE_VIEW_NAME;
     }
-
-
-    @RequestMapping(value = "account/emailexists", method = RequestMethod.GET)
-    public @ResponseBody String emailExists(String email) {
-        Assert.notNull(email);
-        Account account = accountRepository.findFirstByEmail(email);
-
-        return account == null ? "1" : "0";
-    }
+    
 
     @RequestMapping(value = "/confirmEmail", method = RequestMethod.GET)
     public String confirmEmail(Model model, @RequestParam("token") String token){

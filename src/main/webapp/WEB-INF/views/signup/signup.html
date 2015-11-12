@@ -18,7 +18,6 @@
                 return;
             }
             $.get("/account/checkemail?email=" + email, function (responseText) {   // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
-                alert(responseText);
                 if (responseText == "1") {
                     document.getElementById("email_ok").style.display = "none";
                     document.getElementById("email_bad").style.display = "inline";
@@ -31,9 +30,6 @@
             });
         }
 
-        $(document).ready(function () {
-            $("#email").keyup(checkEmailExists);
-        });
     </script>
 </head>
 <body>
