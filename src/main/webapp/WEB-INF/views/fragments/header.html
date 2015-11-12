@@ -17,6 +17,12 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li th:if="${#authorization.expression('isAuthenticated()')}">
+                    <a th:href="@{/service/create}">Demander un service !</a>
+                </li>
+                <li th:if="${#authorization.expression('isAuthenticated()')}">
+                    <a th:href="@{/service}">Trouver un service a rendre !</a>
+                </li>
+                <li th:if="${#authorization.expression('isAuthenticated()')}">
                     <a href="/profile" th:href="@{/profile}">Mon Profil</a>
                 </li>
                 <li th:if="${#authorization.expression('!isAuthenticated()')}">

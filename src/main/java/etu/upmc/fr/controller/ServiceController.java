@@ -88,7 +88,8 @@ public class ServiceController {
     }
 
     @RequestMapping(value = "service")
-    public String list(Model model, @SearchParams ServiceSearch serviceSearch, Pageable pageable) {
+    public String list(Model model, @SearchParams ServiceSearch serviceSearch, @GetAccount Account account, Pageable pageable) {
+        //serviceSearch.setToExclude(account);
         ServiceSpecification spec = new ServiceSpecification(serviceSearch);
         model.addAttribute("services", serviceRepository.findAll(spec, pageable));
         model.addAttribute("serviceSearch", serviceSearch);
