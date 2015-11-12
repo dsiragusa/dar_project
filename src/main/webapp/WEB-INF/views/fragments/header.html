@@ -12,26 +12,21 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">ServiceInParis</a>
+            <a class="navbar-brand" href="#" th:href="@{/}">PariServices</a>
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#" th:href="@{/}">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li th:if="${#authorization.expression('isAuthenticated()')}">
                     <a href="/profile" th:href="@{/profile}">Mon Profil</a>
                 </li>
                 <li th:if="${#authorization.expression('!isAuthenticated()')}">
                     <a href="/signin" th:href="@{/signin}">
-                        <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Sign in
+                        <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Connexion
                     </a>
                 </li>
                 <li th:if="${#authorization.expression('isAuthenticated()')}">
                     <a href="/logout" th:href="@{#}" onclick="$('#form').submit();">
-                        <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout
+                        <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Déconnexion
                     </a>
                     <form style="visibility: hidden" id="form" method="post" action="#" th:action="@{/logout}"></form>
                 </li>

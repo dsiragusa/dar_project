@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <!--/*  Each token will be replaced by their respective titles in the resulting page. */-->
-    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">ServiceInParis</title>
+    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">PariServices</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <!-- default header name is X-CSRF-TOKEN -->
@@ -37,6 +37,6 @@
 <div class="container">
     <section layout:fragment="content"></section>
 </div>
-<div th:replace="fragments/footer :: footer">&copy; 2015 ServiceInParis </div>
+<div th:replace="fragments/footer :: footer">&copy; 2015 PariServices </div>
 </body>
 </html>

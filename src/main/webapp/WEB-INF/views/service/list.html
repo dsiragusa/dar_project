@@ -16,13 +16,13 @@
         <!--/* Show general error message when form contains errors */-->
         <fieldset>
             <div class="form-group">
-                <label for="title" class="col-md-3 control-label">Title</label>
+                <label for="title" class="col-md-3 control-label">Titre</label>
                 <div class="col-md-9">
                     <input type="text" class="form-control" id="title" placeholder="Title" th:field="*{title}" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="category" class="col-md-3 control-label">Category</label>
+                <label for="category" class="col-md-3 control-label">Catégorie</label>
                 <div class="col-md-9">
                     <select class="form-control" id="category" th:field="*{category}" style="width:100%;">
                         <option th:value="NULL"></option>
@@ -40,7 +40,7 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-3 col-md-9">
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <button type="submit" class="btn btn-default">Rechercher</button>
                 </div>
             </div>
         </fieldset>
