@@ -6,112 +6,144 @@
     <title>Service</title>
 </head>
 <body>
-    <section layout:fragment="content">
-        <div class="row">
-            <div class="col-md-12">
-                <h1 th:inline="text" class="page-header">[[${service.title}]]</h1>
-            </div>
-            <div class="col-md-6">
-                <div class="row service-infos">
-                    <div class="col-md-12">
-                        <h5 th:inline="text">Demandé par <a th:href="@{/account/{email}(email=${service.requestor.email})}" th:text="${service.requestor.email}"></a></h5>
+<section layout:fragment="content">
+    <div class="row" th:with="ownService=${service.requestor.id == account.id}">
+        <div class="col-md-12">
+            <h1 th:inline="text" class="page-header">[[${service.title}]]</h1>
+        </div>
+        <div class="col-md-6">
+            <div class="row service-infos">
+                <div class="col-md-12" th:if="${ownService}">
+                    <h5 th:inline="text">Vous avez demandé ce service.</h5>
+                </div>
+                <div class="col-md-12" th:unless="${ownService}">
+                    <h5 th:inline="text">Demandé par <a th:href="@{/account/{email}(email=${service.requestor.email})}"
+                                                        th:text="${service.requestor.email}"></a></h5>
+                </div>
+                <div class="col-md-12">
+                    <p th:text="${service.description}"></p>
+                </div>
+                <div class="col-md-12 service-rdv">
+                    <h4>Rendez-vous</h4>
+
+                    <p th:text="${service.requestor.firstName + ' ' + service.requestor.lastName}"></p>
+
+                    <p id="end" th:text="${service.address}"></p>
+                </div>
+                <div class="col-md-6 col-md-offset-3" th:if="${ownService}">
+                    <div th:if="${service.offerors.isEmpty()}">
+                        Personne n'a candidaté a votre service.
                     </div>
-                    <div class="col-md-12">
-                        <p th:text="${service.description}"></p>
+                    <div th:unless="${service.offerors.isEmpty()}">
+                        Liste des candidats
+                        <ul>
+                            <li th:each="offeror : ${service.offerors}">
+                                <span th:text="${offeror.firstName}"></span>
+                                <span th:text="${offeror.lastName}"></span>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="col-md-12 service-rdv">
-                        <h4>Rendez-vous</h4>
-                        <p th:text="${service.requestor.firstName + ' ' + service.requestor.lastName}"></p>
-                        <p id="end" th:text="${service.address}"></p>
+                </div>
+                <div class="col-md-6 col-md-offset-3" th:unless="${ownService}">
+                    <div th:hidden="${!(service.offerors.contains(account))}">
+                        <div class="btn btn-success disabled">Vous avez condidaté !</div>
                     </div>
-                    <div class="col-md-6 col-md-offset-3">
+                    <div th:hidden="${service.offerors.contains(account)}">
                         <form th:action="@{/service/{id}(id = ${service.id})}" method="post">
-                            <button class="btn btn-success" type="submit" >Rendre service!</button>
+                            <button class="btn btn-success" type="submit">Rendre service!</button>
                         </form>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <h3>Comment y arriver?</h3>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="start" class="col-md-4 control-label">Départ</label>
-                            <div class="col-md-8">
-                                <input id="start" type="text" class="form-control" placeholder="Ex: 4 place Jussieu"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="favorites" class="col-md-4 control-label">Vos addresses</label>
-                            <div class="col-md-8">
-                                <select id="favorites" th:each="address : ${account.addresses}" style="width:100%;">
-                                    <option th:value="NULL"></option>
-                                    <option th:value="${address}"><span th:text="${address.name + ': ' + address.toString()}"></span></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="travelMode" class="col-md-4 control-label">Moyen de transport</label>
-                            <div class="col-md-8">
-                                <select id="travelMode" style="width:100%;">
-                                    <option value="transit">Transports en commun</option>
-                                    <option value="walking">A pied</option>
-                                    <option value="bicycling">En vélo</option>
-                                    <option value="driving">En véhicule</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-3">
-                                <button class="btn btn-info" role="button" id="getPath">Afficher itinéraire</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!--
-                <div class="col-md-6">
-                    <b>Lieu d'achat:</b>
-                    <br />
-                    <p><span id="waypoint" th:text="${service.biddingPlaceAdresse}"></span></p>
-                    <br />
-                    </div>
-                    -->
-                </div>
             </div>
-            <div class="col-md-6">
-                <label for="favorites" class="col-md-3 control-label">Vos adresses</label>
-                <select id="favorites" th:each="address : ${account.addresses}">
-                    <option th:value="${address}"><span th:text="${address.name}"></span></option>
-                </select>
+
+            <div class="row">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <h3>Comment y arriver?</h3>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="start" class="col-md-4 control-label">Départ</label>
+
+                        <div class="col-md-8">
+                            <input id="start" type="text" class="form-control" placeholder="Ex: 4 place Jussieu"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="favorites" class="col-md-4 control-label">Vos addresses</label>
+
+                        <div class="col-md-8">
+                            <select id="favorites" th:each="address : ${account.addresses}" style="width:100%;">
+                                <option th:value="NULL"></option>
+                                <option th:value="${address}"><span
+                                        th:text="${address.name + ': ' + address.toString()}"></span></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="travelMode" class="col-md-4 control-label">Moyen de transport</label>
+
+                        <div class="col-md-8">
+                            <select id="travelMode" style="width:100%;">
+                                <option value="transit">Transports en commun</option>
+                                <option value="walking">A pied</option>
+                                <option value="bicycling">En vélo</option>
+                                <option value="driving">En véhicule</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-md-offset-3">
+                            <button class="btn btn-info" role="button" id="getPath">Afficher itinéraire</button>
+                        </div>
+                    </div>
+                </div>
                 <!--
+            <div class="col-md-6">
                 <b>Lieu d'achat:</b>
                 <br />
                 <p><span id="waypoint" th:text="${service.biddingPlaceAdresse}"></span></p>
                 <br />
+                </div>
                 -->
             </div>
-            <div class="col-md-6">
-                <label for="favorites" class="col-md-3 control-label">Vos adresses</label>
-                <b>Lieu de rendez-vous:</b>
-                <br />
-                <br />
-                <b>Moyen de transport:</b>
-                <br />
-                <select id="travelMode">
-                    <option value="transit">Transports en commun</option>
-                    <option value="walking">A pied</option>
-                    <option value="bicycling">En vélo</option>
-                    <option value="driving">En véhicule</option>
-                </select>
-                <br />
-                <br />
-                <input type="submit" id="submit" value="Calculer itinéraire !" />
-                <div id="map"></div>
-            </div>
         </div>
-        <script th:src="@{/resources/js/googleMaps.js}"></script>
-        <script th:src="@{https://maps.googleapis.com/maps/api/js(key = 'AIzaSyC1d-ntv8DXxJvj6eOr2RMK5Wo5qVrWcUw', signed_in = 'true', callback = 'initMap')}" async="async" defer="defer"></script>
-    </section>
+        <div class="col-md-6">
+            <label for="favorites" class="col-md-3 control-label">Vos adresses</label>
+            <select id="favorites" th:each="address : ${account.addresses}">
+                <option th:value="${address}"><span th:text="${address.name}"></span></option>
+            </select>
+            <!--
+            <b>Lieu d'achat:</b>
+            <br />
+            <p><span id="waypoint" th:text="${service.biddingPlaceAdresse}"></span></p>
+            <br />
+            -->
+        </div>
+        <div class="col-md-6">
+            <label for="favorites" class="col-md-3 control-label">Vos adresses</label>
+            <b>Lieu de rendez-vous:</b>
+            <br/>
+            <br/>
+            <b>Moyen de transport:</b>
+            <br/>
+            <select id="travelMode">
+                <option value="transit">Transports en commun</option>
+                <option value="walking">A pied</option>
+                <option value="bicycling">En vélo</option>
+                <option value="driving">En véhicule</option>
+            </select>
+            <br/>
+            <br/>
+            <input type="submit" id="submit" value="Calculer itinéraire !"/>
+
+            <div id="map"></div>
+        </div>
+    </div>
+    <script th:src="@{/resources/js/googleMaps.js}"></script>
+    <script th:src="@{https://maps.googleapis.com/maps/api/js(key = 'AIzaSyC1d-ntv8DXxJvj6eOr2RMK5Wo5qVrWcUw', signed_in = 'true', callback = 'initMap')}"
+            async="async" defer="defer"></script>
+</section>
 </body>
 </html>
