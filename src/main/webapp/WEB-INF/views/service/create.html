@@ -31,7 +31,7 @@
             <div class="form-group" th:classappend="${#fields.hasErrors('category')}? 'has-error'">
                 <label for="category" class="col-md-3 control-label">Category</label>
                 <div class="col-md-9">
-                    <select class="form-control" id="category" th:field="*{category}">
+                    <select class="form-control" id="category" th:field="*{category}" style="width:100%;>
                         <option th:value="NULL"></option>
                         <option th:each="cat : ${categories}" th:value="${{cat}}" th:text="${cat.name}"></option>
                     </select>
@@ -41,7 +41,7 @@
             <div class="form-group" th:classappend="${#fields.hasErrors('address')}? 'has-error'">
                 <label for="category" class="col-md-3 control-label">Address</label>
                 <div class="col-md-9">
-                    <select class="form-control" id="address" th:field="*{address}">
+                    <select class="form-control" id="address" th:field="*{address}" style="width:100%;>
                         <option th:value="NULL"></option>
                         <option th:each="ad : ${account.addresses}" th:value="${{ad}}" th:text="${ad.name}"></option>
                     </select>
@@ -51,7 +51,7 @@
             <div class="form-group" th:classappend="${#fields.hasErrors('tags')}? 'has-error'">
                 <label for="tags" class="col-md-3 control-label">Tags</label>
                 <div class="col-md-9">
-                    <select class="form-control" id="tags" th:field="*{tags}" multiple="multiple" data-tags="true">
+                    <select class="form-control" id="tags" th:field="*{tags}" multiple="multiple" data-tags="true" style="width:100%;>
                         <option th:value="NULL"></option>
                         <option th:each="t : ${tags}" th:value="${{t}}" th:text="${t.name}"></option>
                     </select>

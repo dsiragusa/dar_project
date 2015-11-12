@@ -24,7 +24,7 @@
             <div class="form-group">
                 <label for="category" class="col-md-3 control-label">Category</label>
                 <div class="col-md-9">
-                    <select class="form-control" id="category" th:field="*{category}">
+                    <select class="form-control" id="category" th:field="*{category}" style="width:100%;">
                         <option th:value="NULL"></option>
                         <option th:each="cat : ${categories}" th:value="${{cat}}" th:text="${cat.name}"></option>
                     </select>
@@ -33,7 +33,7 @@
             <div class="form-group">
                 <label for="tags" class="col-md-3 control-label">Tags</label>
                 <div class="col-md-9">
-                    <select class="form-control" id="tags" th:field="*{tags}" multiple="multiple" data-tags="true">
+                    <select class="form-control" id="tags" th:field="*{tags}" multiple="multiple" data-tags="true" style="width:100%;">
                         <option th:each="tag : ${allTags}" th:value="${{tag}}" th:text="${tag.name}"></option>
                     </select>
                 </div>
@@ -51,7 +51,12 @@
         <li th:each="s : ${services}"><a th:href="@{/service/{id}(id = ${s.id})}" th:text="${s.title}"></a></li>
     </ul>
 
-    <div class="table-pagination">
+    <th:block th:if="${not services.hasContent()}">
+        <div th:replace="fragments/alert :: alert (type=${'warning'}, message=${'Aucun resultat'})">&nbsp;</div>
+    </th:block>
+
+
+    <div class="table-pagination" th:if="${services.hasContent()}">
         <ul class="pagination">
             <li th:class="${services.isFirst()} ? 'disabled' : ''">
                 <a th:if="${not services.isFirst()}" th:href="@{${'/service'}(page=${services.number-1},size=${services.size})} + ${serviceSearch}">Previous</a>

@@ -18,7 +18,7 @@ public class Tag implements java.io.Serializable {
     private String name;
 
     @JsonIgnore
-    @ManyToMany(targetEntity = Service.class, mappedBy = "tags")
+    @ManyToMany(targetEntity = Service.class, mappedBy = "tags", fetch = FetchType.EAGER)
     private Set<Service> services;
 
     public Tag() {

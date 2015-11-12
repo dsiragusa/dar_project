@@ -23,7 +23,7 @@ public class VerificationToken {
 
     private String token;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private Account account;
 
     @MyDateTime

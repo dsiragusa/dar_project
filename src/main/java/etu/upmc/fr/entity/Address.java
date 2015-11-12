@@ -116,7 +116,7 @@ public class Address {
             s += line2 + " ";
         }
 
-        s += city + " " + zip + " " + country;
+        s += city + " " + zip + " France";
 
         return s;
     }

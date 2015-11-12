@@ -8,30 +8,42 @@
 <body>
     <section layout:fragment="content">
         <div class="row">
-            <h1 th:inline="text">Titre: [[${service.title}]]</h1>
-            <div class="col-md-3 col-md-offset-9">
-                <form th:action="@{/service/{id}(id = ${service.id})}" method="post">
-                    <button type="submit" >Rendre service !</button>
-                </form>
+            <div class="col-md-12">
+                <h1 th:inline="text" class="">[[${service.title}]]</h1>
+            </div>
+            <div class="col-md-6">
+                <div class="container">
+                    <div class="col-md-12">
+                        <p th:text="${service.description}"></p>
+                    </div>
+                    <div class="col-md-12">
+                        <h4>Rendez-vous</h4>
+                        <p th:text="${service.requestor.firstName + ' ' + service.requestor.lastName}"></p>
+                        <p id="end" th:text="${service.address}"></p>
+                    </div>
+                    <div class="col-md-3">
+                        <form th:action="@{/service/{id}(id = ${service.id})}" method="post">
+                            <button type="submit" >Rendre service !</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div id="map"></div>
             </div>
         </div>
         <div class="row">
-            <p>Description: <span th:text="${service.description}"></span></p>
-        </div>
-        <div id="directions" class="row">
-            <div class="col-md-3">
-                <b>Départ:</b>
-                <br />
-                <input id="start" type="text" />
-                <br />
+            <div class="form-group">
+                <label for="start" class="col-md-3 control-label">Départ</label>
+                <div class="col-md-9">
+                    <input id="start" type="text" class="form-control" placeholder="Ex: 4 place Jussieu"/>
+                </div>
             </div>
             <div class="col-md-6">
-                <i>Adresses favorites:</i>
-                <br />
+                <label for="favorites" class="col-md-3 control-label">Votres addresses</label>
                 <select id="favorites" th:each="address : ${account.addresses}">
                     <option th:value="${address}"><span th:text="${address.name}"></span></option>
                 </select>
-                <br />
                 <!--
                 <b>Lieu d'achat:</b>
                 <br />
@@ -40,9 +52,9 @@
                 -->
             </div>
             <div class="col-md-6">
+                <label for="favorites" class="col-md-3 control-label">Votres addresses</label>
                 <b>Lieu de rendez-vous:</b>
                 <br />
-                <p><span id="end" th:text="${service.address.line1 + ' ' + service.address.line2 + ' ' + service.address.city + ' ' + service.address.zip}"></span></p>
                 <br />
                 <b>Moyen de transport:</b>
                 <br />
@@ -56,81 +68,9 @@
                 <br />
                 <input type="submit" id="submit" value="Calculer itinéraire !" />
             </div>
-            <div class="col-md-12">
-                <div id="map"></div>
-            </div>
         </div>
+        <script th:src="@{/resources/js/googleMaps.js}"></script>
+        <script th:src="@{https://maps.googleapis.com/maps/api/js(key = 'AIzaSyC1d-ntv8DXxJvj6eOr2RMK5Wo5qVrWcUw', signed_in = 'true', callback = 'initMap')}" async="async" defer="defer"></script>
     </section>
-    <script>
-
-        window.initMap = function () {
-            directionsService = new google.maps.DirectionsService;
-            directionsDisplay = new google.maps.DirectionsRenderer;
-
-            var element = document.getElementById('map');
-
-            $(element).css('height', '500px');
-
-            var map = new google.maps.Map(element, {
-                zoom: 12,
-                scrollwheel: false,
-                center: {lat: 48.85661, lng: 2.35222}
-            });
-            directionsDisplay.setMap(map);
-
-            document.getElementById('submit').addEventListener('click', function() {
-                calculateAndDisplayRoute(directionsService, directionsDisplay);
-            });
-        };
-
-
-        function calculateAndDisplayRoute() {
-
-            /*
-            var waypoint = document.getElementById('waypoint').innerHTML;
-
-            var waypointArray = [];
-
-            if(waypoint != "") {
-                var temp = {location: waypoint, stopover: true};
-                waypointArray.push(temp);
-            }
-            */
-
-            var travelMode = {
-                transit : google.maps.TravelMode.TRANSIT,
-                driving : google.maps.TravelMode.DRIVING,
-                bicycling : google.maps.TravelMode.BICYCLING,
-                walking : google.maps.TravelMode.WALKING
-            };
-            var selectedTravelMode = travelMode[$('#travelMode').val()];
-
-            directionsService.route({
-                origin: document.getElementById('start').value,
-                destination: document.getElementById('end').innerHTML,
-                //waypoints: waypointArray,
-                optimizeWaypoints: true,
-                travelMode: selectedTravelMode
-            }, function(response, status) {
-                if (status === google.maps.DirectionsStatus.OK) {
-                    directionsDisplay.setDirections(response);
-                } else {
-                    window.alert('Le calcul de l\'itinéraire a échoué. Peut être avez vous entrer une mauvaise adresse ?' + status);
-                }
-            });
-        }
-
-        $(document).ready(function() {
-            $('#favorites').change(function (event) {
-                $('#start').val($(this).val());
-
-                calculateAndDisplayRoute();
-            });
-
-            $('#travelMode').change(calculateAndDisplayRoute);
-
-        });
-    </script>
-    <script th:src="@{https://maps.googleapis.com/maps/api/js(key = 'AIzaSyC1d-ntv8DXxJvj6eOr2RMK5Wo5qVrWcUw', signed_in = 'true', callback = 'initMap')}" async="async" defer="defer"></script>
 </body>
 </html>

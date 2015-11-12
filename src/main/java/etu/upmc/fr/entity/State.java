@@ -22,7 +22,7 @@ public class State {
     @Temporal(TemporalType.TIMESTAMP)
     private Date end;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Service service;
 
     public State() {
