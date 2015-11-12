@@ -110,40 +110,11 @@
             </div>
         </div>
         <div class="col-md-6">
-            <label for="favorites" class="col-md-3 control-label">Vos adresses</label>
-            <select id="favorites" th:each="address : ${account.addresses}">
-                <option th:value="${address}"><span th:text="${address.name}"></span></option>
-            </select>
-            <!--
-            <b>Lieu d'achat:</b>
-            <br />
-            <p><span id="waypoint" th:text="${service.biddingPlaceAdresse}"></span></p>
-            <br />
-            -->
-        </div>
-        <div class="col-md-6">
-            <label for="favorites" class="col-md-3 control-label">Vos adresses</label>
-            <b>Lieu de rendez-vous:</b>
-            <br/>
-            <br/>
-            <b>Moyen de transport:</b>
-            <br/>
-            <select id="travelMode">
-                <option value="transit">Transports en commun</option>
-                <option value="walking">A pied</option>
-                <option value="bicycling">En vélo</option>
-                <option value="driving">En véhicule</option>
-            </select>
-            <br/>
-            <br/>
-            <input type="submit" id="submit" value="Calculer itinéraire !"/>
-
             <div id="map"></div>
         </div>
     </div>
     <script th:src="@{/resources/js/googleMaps.js}"></script>
-    <script th:src="@{https://maps.googleapis.com/maps/api/js(key = 'AIzaSyC1d-ntv8DXxJvj6eOr2RMK5Wo5qVrWcUw', signed_in = 'true', callback = 'initMap')}"
-            async="async" defer="defer"></script>
+    <script th:src="@{https://maps.googleapis.com/maps/api/js(key = 'AIzaSyC1d-ntv8DXxJvj6eOr2RMK5Wo5qVrWcUw', signed_in = 'true', callback = 'initMap')}" async="async" defer="defer"></script>
 </section>
 </body>
 </html>
