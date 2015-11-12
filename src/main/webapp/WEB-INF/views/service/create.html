@@ -10,14 +10,14 @@
     <form class="form-horizontal" method="post" th:action="@{/service/create}" th:object="${service}">
         <!--/* Show general error message when form contains errors */-->
         <th:block th:if="${#fields.hasErrors('${service.*}')}">
-            <div th:replace="fragments/alert :: alert (type='danger', message='Form contains errors. Please try again.')">Alert</div>
+            <div th:replace="fragments/alert :: alert (type='danger', message='Des champs sont invalides, veuillez réesayer.')">Alert</div>
         </th:block>
         <fieldset>
-            <legend>Create a service request</legend>
+            <legend>Demander un service</legend>
             <div class="form-group" th:classappend="${#fields.hasErrors('title')}? 'has-error'">
-                <label for="title" class="col-md-3 control-label">Title</label>
+                <label for="title" class="col-md-3 control-label">Titre du service</label>
                 <div class="col-md-9">
-                    <input type="text" class="form-control" id="title" placeholder="Title" th:field="*{title}" />
+                    <input type="text" class="form-control" id="title" placeholder="Titre" th:field="*{title}" />
                     <span class="help-block" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Incorrect</span>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="form-group" th:classappend="${#fields.hasErrors('category')}? 'has-error'">
-                <label for="category" class="col-md-3 control-label">Category</label>
+                <label for="category" class="col-md-3 control-label">Catégorie</label>
                 <div class="col-md-9">
                     <select class="form-control" id="category" th:field="*{category}" style="width:100%;">
                         <option th:value="NULL"></option>
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="form-group" th:classappend="${#fields.hasErrors('address')}? 'has-error'">
-                <label for="category" class="col-md-3 control-label">Address</label>
+                <label for="category" class="col-md-3 control-label">Adresse de livraison</label>
                 <div class="col-md-9">
                     <select class="form-control" id="address" th:field="*{address}" style="width:100%;">
                         <option th:value="NULL"></option>
@@ -59,14 +59,14 @@
                 </div>
             </div>
             <div class="form-group" th:classappend="${#fields.hasErrors('biddingDeadline')}? 'has-error'">
-                <label for="biddingDeadline" class="col-md-3 control-label">Bidding stops at</label>
+                <label for="biddingDeadline" class="col-md-3 control-label">Fin des candidatures</label>
                 <div class="col-md-9">
                     <input id="biddingDeadline" type="datetime" class="form-control" th:field="*{biddingDeadline}" placeholder="Ex: 10/10/2013 10:10:10"/>
                     <span class="help-block" th:if="${#fields.hasErrors('biddingDeadline')}" th:errors="*{biddingDeadline}">Incorrect</span>
                 </div>
             </div>
             <div class="form-group" th:classappend="${#fields.hasErrors('serviceDeadline')}? 'has-error'">
-                <label for="serviceDeadline" class="col-md-3 control-label">Service deadline</label>
+                <label for="serviceDeadline" class="col-md-3 control-label">Date limite de livraison</label>
                 <div class="col-md-9">
                     <input id="serviceDeadline" type="datetime" class="form-control" th:field="*{serviceDeadline}" placeholder="Ex: 10/10/2013 12:10:10"/>
                     <span class="help-block" th:if="${#fields.hasErrors('serviceDeadline')}" th:errors="*{serviceDeadline}">Incorrect</span>

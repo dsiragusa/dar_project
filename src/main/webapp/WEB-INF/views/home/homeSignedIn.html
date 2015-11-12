@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorator="layout/default">
 <head>
-    <title th:text="#{view.index.title}">Welcome!</title>
+    <title th:text="#{view.index.title}">Bienvenue!</title>
 
 </head>
 <body>
@@ -14,14 +14,14 @@
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
     </th:block>
     <p>
-        Welcome to Service In Paris !
-        Need something to be done ? Find someone to do it. Legal stuff only.
+        Bienvenue sur PariServices !
+        Vous avez besoin de quelque chose ? Trouvez quelqu'un pour vous l'apporter.
     </p>
     <p>
-        <a th:href="@{/service/create}">Request a service</a>
+        <a th:href="@{/service/create}">Demander un service !</a>
     </p>
     <p>
-        <a th:href="@{/service}">List services</a>
+        <a th:href="@{/service}">Trouver un service a rendre !</a>
     </p>
 </section>
 </body>
