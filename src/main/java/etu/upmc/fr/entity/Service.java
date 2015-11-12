@@ -61,10 +61,13 @@ public class Service implements Comparable<Service> {
     private Date serviceDeadline;
 
     @NotNull
+
     private int isActive;
 
     public Service() {
+
         setOfferors(new HashSet<>());
+        isActive = 1;
     }
 
     public Long getId() {

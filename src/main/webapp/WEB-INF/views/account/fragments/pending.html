@@ -4,15 +4,20 @@
 </head>
 <body>
 <div th:fragment="pending" th:align="center">
-    <th:block th:if="${!account.requests.isEmpty()}">
-        <table>
+    <th:block th:unless="${account.requests.isEmpty()}">
+        <div class="table-responsive col-md-10 col-md-offset-2">
+        <table class="table">
+            <thead>
             <tr>
                 <th>Titre</th>
                 <th>Volontaires</th>
                 <th>Date limite pour les proposition</th>
                 <th>Date limite pour le service</th>
             </tr>
+
+            </thead>
             <tr th:each="request : ${account.requests}" th:if="${request.getCurrentState().code &lt; 2}">
+                <tbody>
                 <td><a th:href="@{/service/{id}(id = ${request.id})}" th:text="${request.title}"></a></td>
                 <td>
                     <th:block th:if="${!request.offerors.isEmpty()}">
@@ -26,8 +31,10 @@
                 </td>
                 <td th:text="${request.biddingDeadline}"></td>
                 <td th:text="${request.serviceDeadline}"></td>
+                </tbody>
             </tr>
         </table>
+        </div>
     </th:block>
     <th:block th:if="${account.requests.isEmpty()}">
         <p>Aucune requête en cours.</p>
