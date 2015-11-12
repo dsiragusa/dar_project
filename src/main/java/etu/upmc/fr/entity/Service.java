@@ -1,5 +1,7 @@
 package etu.upmc.fr.entity;
 
+import com.sun.org.apache.xerces.internal.impl.dv.xs.BooleanDV;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import etu.upmc.fr.annotations.MyDateTime;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -13,7 +15,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "service")
-public class Service {
+public class Service implements Comparable<Service> {
 
     @Id
     @GeneratedValue
@@ -57,6 +59,9 @@ public class Service {
     @NotNull
     @MyDateTime
     private Date serviceDeadline;
+
+    @NotNull
+    private int isActive;
 
     public Service() {
         setOfferors(new HashSet<>());
@@ -180,5 +185,15 @@ public class Service {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getIsActive() { return isActive; }
+
+    public void setIsActive(int isActive) { this.isActive = isActive; }
+
+    public int compareTo(Service service) {
+        Date date = service.getBiddingDeadline();
+
+        return this.getBiddingDeadline().before(date) ? -1 : this.getBiddingDeadline().after(date) ? 1 : 0;
     }
 }

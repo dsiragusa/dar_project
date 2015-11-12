@@ -55,13 +55,13 @@ public class Account implements java.io.Serializable {
     @Valid
 	private List<Address> addresses;
 
-    @OneToMany(mappedBy = "requestor")
+    @OneToMany(mappedBy = "requestor", fetch = FetchType.EAGER)
     private Set<Service> requests;
 
-    @ManyToMany(mappedBy = "offerors", targetEntity = Service.class)
+    @ManyToMany(mappedBy = "offerors", targetEntity = Service.class, fetch = FetchType.EAGER)
     private Set<Service> offers;
 
-    @OneToMany(mappedBy = "contractor")
+    @OneToMany(mappedBy = "contractor", fetch = FetchType.EAGER)
     private Set<Service> contracts;
 
     public Account() {
@@ -159,5 +159,10 @@ public class Account implements java.io.Serializable {
 
 	public void setEmailValidated(boolean emailValidated) {
 		this.emailValidated = emailValidated;
+	}
+
+	@Override
+	public String toString() {
+		return firstName + " " + lastName;
 	}
 }
