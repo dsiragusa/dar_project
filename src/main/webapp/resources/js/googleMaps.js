@@ -15,9 +15,7 @@
             });
             directionsDisplay.setMap(map);
 
-            document.getElementById('submit').addEventListener('click', function() {
-                calculateAndDisplayRoute(directionsService, directionsDisplay);
-            });
+            $('#getPath').click(calculateAndDisplayRoute);
         };
 
 
@@ -43,8 +41,8 @@
             var selectedTravelMode = travelMode[$('#travelMode').val()];
 
             directionsService.route({
-                origin: document.getElementById('start').value,
-                destination: document.getElementById('end').innerHTML,
+                origin: $('#start').val(),
+                destination: $('#end').text(),
                 //waypoints: waypointArray,
                 optimizeWaypoints: true,
                 travelMode: selectedTravelMode
