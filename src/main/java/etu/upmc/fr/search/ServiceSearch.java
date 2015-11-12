@@ -1,5 +1,6 @@
 package etu.upmc.fr.search;
 
+import etu.upmc.fr.entity.Account;
 import etu.upmc.fr.entity.Category;
 import etu.upmc.fr.entity.Tag;
 import org.springframework.util.StringUtils;
@@ -15,6 +16,9 @@ public class ServiceSearch {
     private Set<Tag> tags;
     private Category category;
     private String title;
+
+    private Account toExclude;
+    private Account toMatch;
 
     public ServiceSearch() {
         this.tags = new HashSet<>();
@@ -48,6 +52,24 @@ public class ServiceSearch {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public static String accountExcludeKey = "requestor";
+
+    public Account getToExclude() {
+        return toExclude;
+    }
+
+    public void setToExclude(Account toExclude) {
+        this.toExclude = toExclude;
+    }
+
+    public Account getToMatch() {
+        return toMatch;
+    }
+
+    public void setToMatch(Account toMatch) {
+        this.toMatch = toMatch;
     }
 
     public String toString() {
