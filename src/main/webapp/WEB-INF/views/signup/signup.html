@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorator="layout/default">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
 <head>
     <title>Signup</title>
     <script>
@@ -38,30 +38,38 @@
 </head>
 <body>
 <section layout:fragment="content">
-<form class="form-narrow form-horizontal" method="post" th:action="@{/signup}" th:object="${account}">
-    <!--/* Show general error message when form contains errors */-->
-    <th:block th:if="${#fields.hasErrors('${account.*}')}">
-        <div th:replace="fragments/alert :: alert (type='danger', message='Form contains errors. Please try again.')">Alert</div>
-    </th:block>
-    <fieldset>
-        <legend>Creation de compte</legend>
-        <div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
-            <label for="email" class="col-md-3 control-label">Email</label>
-            <div class="col-md-9">
-                <input type="text" class="form-control" id="email" placeholder="john.malkovich@domain.com" th:field="*{email}" />
-                <span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email non valide :(</span>
-                <span class="glyphicon glyphicon-remove" style="color: red; display: none;" id="email_bad"/>
-                <span class="glyphicon glyphicon-ok" style="color: green; display: none;" id="email_ok"/>
+    <form class="form-narrow form-horizontal" method="post" th:action="@{/signup}" th:object="${account}">
+        <!--/* Show general error message when form contains errors */-->
+        <th:block th:if="${#fields.hasErrors('${account.*}')}">
+            <div th:replace="fragments/alert :: alert (type='danger', message='Form contains errors. Please try again.')">
+                Alert
             </div>
-        </div>
-        <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error'">
-            <label for="password" class="col-md-3 control-label">Mot de passe</label>
-            <div class="col-md-9">
-                <input type="password" class="form-control" id="password" placeholder="Mot de passe" th:field="*{password}"/>
-                <span class="help-block" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Mot de passe non valide :(</span>
+        </th:block>
+        <fieldset>
+            <legend>Creation de compte</legend>
+            <div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
+                <label for="email" class="col-md-3 control-label">Email</label>
+
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="email" placeholder="john.malkovich@domain.com"
+                           th:field="*{email}"/>
+                    <span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email non valide :(</span>
+                    <span class="glyphicon glyphicon-remove" style="color: red; display: none;" id="email_bad"/>
+                    <span class="glyphicon glyphicon-ok" style="color: green; display: none;" id="email_ok"/>
+                </div>
+            </div>
+            <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error'">
+                <label for="password" class="col-md-3 control-label">Mot de passe</label>
+
+                <div class="col-md-9">
+                    <input type="password" class="form-control" id="password" placeholder="Mot de passe"
+                           th:field="*{password}"/>
+                    <span class="help-block" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Mot de passe non valide :(</span>
+                </div>
             </div>
             <div class="form-group" th:classappend="${#fields.hasErrors('firstName')}? 'has-error'">
                 <label for="firstName" class="col-md-3 control-label">Prénom</label>
+
                 <div class="col-md-9">
                     <input type="text" class="form-control" id="firstName" placeholder="John" th:field="*{firstName}"/>
                     <span class="help-block" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Incorrect first name</span>
@@ -69,43 +77,58 @@
             </div>
             <div class="form-group" th:classappend="${#fields.hasErrors('lastName')}? 'has-error'">
                 <label for="lastName" class="col-md-3 control-label">Nom de Famille</label>
+
                 <div class="col-md-9">
-                    <input type="text" class="form-control" id="lastName" placeholder="Malkovich" th:field="*{lastName}"/>
+                    <input type="text" class="form-control" id="lastName" placeholder="Malkovich"
+                           th:field="*{lastName}"/>
                     <span class="help-block" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Incorrect last name</span>
                 </div>
             </div>
             <div class="form-group" th:classappend="${#fields.hasErrors('addresses[0].line1')}? 'has-error'">
                 <label for="line1" class="col-md-3 control-label">Adresse</label>
+
                 <div class="col-md-9">
-                    <input type="text" class="form-control" id="line1" placeholder="Somewhere" th:field="*{addresses[0].line1}"/>
-                    <span class="help-block" th:if="${#fields.hasErrors('addresses[0].line1')}" th:errors="*{addresses[0].line1}">Incorrect address</span>
+                    <input type="text" class="form-control" id="line1" placeholder="Somewhere"
+                           th:field="*{addresses[0].line1}"/>
+                    <span class="help-block" th:if="${#fields.hasErrors('addresses[0].line1')}"
+                          th:errors="*{addresses[0].line1}">Incorrect address</span>
                 </div>
             </div>
             <div class="form-group" th:classappend="${#fields.hasErrors('addresses[0].line2')}? 'has-error'">
                 <label for="line2" class="col-md-3 control-label">Complément d'adresse</label>
+
                 <div class="col-md-9">
-                    <input type="text" class="form-control" id="line2" placeholder="Over The Rainbow" th:field="*{addresses[0].line2}"/>
-                    <span class="help-block" th:if="${#fields.hasErrors('addresses[0].line2')}" th:errors="*{addresses[0].line2}">Incorrect address</span>
+                    <input type="text" class="form-control" id="line2" placeholder="Over The Rainbow"
+                           th:field="*{addresses[0].line2}"/>
+                    <span class="help-block" th:if="${#fields.hasErrors('addresses[0].line2')}"
+                          th:errors="*{addresses[0].line2}">Incorrect address</span>
                 </div>
             </div>
             <div class="form-group" th:classappend="${#fields.hasErrors('addresses[0].city')}? 'has-error'">
                 <label for="city" class="col-md-3 control-label">Ville</label>
+
                 <div class="col-md-9">
-                    <input type="text" class="form-control" id="city" placeholder="Way Up High" th:field="*{addresses[0].city}"/>
-                    <span class="help-block" th:if="${#fields.hasErrors('addresses[0].city')}" th:errors="*{addresses[0].city}">Incorrect city</span>
+                    <input type="text" class="form-control" id="city" placeholder="Way Up High"
+                           th:field="*{addresses[0].city}"/>
+                    <span class="help-block" th:if="${#fields.hasErrors('addresses[0].city')}"
+                          th:errors="*{addresses[0].city}">Incorrect city</span>
                 </div>
             </div>
             <div class="form-group" th:classappend="${#fields.hasErrors('addresses[0].zip')}? 'has-error'">
                 <label for="zip" class="col-md-3 control-label">Code Postal</label>
+
                 <div class="col-md-9">
-                    <input type="text" class="form-control" id="zip" placeholder="75001" th:field="*{addresses[0].zip}"/>
-                    <span class="help-block" th:if="${#fields.hasErrors('addresses[0].zip')}" th:errors="*{addresses[0].zip}">Incorrect postal code</span>
+                    <input type="text" class="form-control" id="zip" placeholder="75001"
+                           th:field="*{addresses[0].zip}"/>
+                    <span class="help-block" th:if="${#fields.hasErrors('addresses[0].zip')}"
+                          th:errors="*{addresses[0].zip}">Incorrect postal code</span>
                 </div>
             </div>
             <div class="form-group">
                 <label for="country" class="col-md-3 control-label">Pays</label>
+
                 <div class="col-md-9">
-                    <input type="text" class="form-control" id="country" placeholder="France" disabled="disabled" />
+                    <input type="text" class="form-control" id="country" placeholder="France" disabled="disabled"/>
                 </div>
             </div>
             <div class="form-group">
@@ -117,7 +140,6 @@
                 <div class="col-md-offset-3 col-md-9">
                     <p>Vous avez deja un compte? <a href="signin" th:href="@{/signin}">Connexion</a></p>
                 </div>
-            </div>
             </div>
         </fieldset>
     </form>
