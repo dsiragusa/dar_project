@@ -28,3 +28,12 @@ body {
 .pariservice-footer {
     margin-top: 20px;
 }
+
+.service-search-bar {
+    margin-bottom: 30px;
+}
+
+.service-search-bar .form-group {
+    margin-left: 10px;
+    margin-right: 10px;
+}

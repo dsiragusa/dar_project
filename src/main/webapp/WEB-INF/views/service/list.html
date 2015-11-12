@@ -12,40 +12,42 @@
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}})">&nbsp;</div>
     </th:block>
 
-    <div class="row">
-        <form class="form-horizontal" method="get" th:action="@{/service}" th:object="${serviceSearch}">
-            <fieldset>
-                <div class="form-group">
-                    <label for="title" class="col-md-3 control-label">Titre</label>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="title" placeholder="Title" th:field="*{title}" />
+    <div class="row service-search-bar">
+        <div class="col-md-12" align="center">
+            <form class="form-inline" method="get" th:action="@{/service}" th:object="${serviceSearch}">
+                <fieldset>
+                    <div class="form-group">
+                        <label for="title" class="control-label">Titre</label>
+                        <input type="text" class="form-control" id="title" placeholder="Titre" th:field="*{title}" />
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="category" class="col-md-3 control-label">Catégorie</label>
-                    <div class="col-md-9">
-                        <select class="form-control" id="category" th:field="*{category}" style="width:100%;">
+                    <div class="form-group">
+                        <label for="category" class="control-label">Catégorie</label>
+                        <select class="form-control" id="category" th:field="*{category}" style="min-width: 50px;">
                             <option th:value="NULL"></option>
                             <option th:each="cat : ${categories}" th:value="${{cat}}" th:text="${cat.name}"></option>
                         </select>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="tags" class="col-md-3 control-label">Tags</label>
-                    <div class="col-md-9">
-                        <select class="form-control" id="tags" th:field="*{tags}" multiple="multiple" data-tags="true" style="width:100%;">
+                    <div class="form-group">
+                        <label for="tags" class="control-label">Tags</label>
+                        <select class="form-control" id="tags" th:field="*{tags}" multiple="multiple" data-tags="true" style="min-width:50px;">
                             <option th:each="tag : ${allTags}" th:value="${{tag}}" th:text="${tag.name}"></option>
                         </select>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-3 col-md-9">
+                    <div class="form-group">
+                        <label for="size" class="control-label">Par page</label>
+                        <select class="form-control" id="size" name="size">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <button type="submit" class="btn btn-default">Rechercher</button>
                     </div>
-                </div>
-            </fieldset>
-        </form>
+                </fieldset>
+            </form>
 
+        </div>
     </div>
 
     <div class="row">
