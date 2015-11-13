@@ -4,23 +4,31 @@
 </head>
 <body>
 <div th:fragment="history" th:align="center">
-    <th:block th:if="${!account.contracts.isEmpty()}">
-        <table>
-            <tr>
-                <th>Titre</th>
-                <th>Demandeur</th>
-                <th>Terminée le</th>
-            </tr>
-            <tr th:each="contract : ${account.contracts}" th:if="${contract.getCurrentState().code == 2}">
-                <td><a th:href="@{/service/{id}(id = ${contract.id})}" th:text="${contract.title}"></a></td>
-                <td th:text="${contract.contractor}"></td>
-                <td th:text="${contract.serviceDeadline}"></td>
-            </tr>
-        </table>
-    </th:block>
-    <th:block th:if="${account.contracts.isEmpty()}">
-        <p>Votre historique est vide.</p>
-    </th:block>
+    <div class="panel">
+        <div class="panel-body">
+            <th:block th:if="${!account.contracts.isEmpty()}">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Titre</th>
+                            <th>Demandeur</th>
+                            <th>Terminée le</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="contract : ${account.contracts}" th:if="${contract.getCurrentState().code == 2}">
+                            <td><a th:href="@{/service/{id}(id = ${contract.id})}" th:text="${contract.title}"></a></td>
+                            <td th:text="${contract.contractor}"></td>
+                            <td th:text="${{contract.serviceDeadline}}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </th:block>
+            <th:block th:if="${account.contracts.isEmpty()}">
+                <p>Votre historique est vide.</p>
+            </th:block>
+        </div>
+    </div>
 </div>
 </body>
 </html>

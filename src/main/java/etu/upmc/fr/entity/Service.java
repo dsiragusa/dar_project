@@ -1,10 +1,9 @@
 package etu.upmc.fr.entity;
 
-import com.sun.org.apache.xerces.internal.impl.dv.xs.BooleanDV;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import etu.upmc.fr.annotations.MyDateTime;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -21,18 +20,19 @@ public class Service implements Comparable<Service> {
     @GeneratedValue
     private Long id;
 
-    @NotBlank
-    @Length(min = 5, max = 100)
+    @NotBlank(message = "{notBlank.message}")
+    @Length(min = 5, max = 100, message = "{length.message}")
     private String title;
 
-    @NotBlank
-    @Length(min = 10)
+    @NotBlank(message = "{notBlank.message}")
+    @Length(min = 10, message = "{length.message}")
     private String description;
 
     @ManyToMany(targetEntity = Tag.class, cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Set<Tag> tags;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @NotNull(message = "{notBlank.message}")
     private Category category;
 
     @OneToMany(mappedBy = "service", fetch = FetchType.EAGER)
@@ -48,16 +48,15 @@ public class Service implements Comparable<Service> {
     private Account contractor;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @NotNull(message = "{notBlank.message}")
     private Address address;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
-    @MyDateTime
+    @NotNull(message = "{notBlank.message}")
     private Date biddingDeadline;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
-    @MyDateTime
+    @NotNull(message = "{notBlank.message}")
     private Date serviceDeadline;
 
     @NotNull

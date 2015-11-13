@@ -5,7 +5,6 @@
 <head>
     <title>Profile</title>
     <link th:href="@{/resources/css/simple-sidebar.css}" rel="stylesheet" media="screen" />
-    <!-- Menu Toggle Script -->
     <script>
         $("#menu-toggle").click(function(e) {
             e.preventDefault();
@@ -56,69 +55,36 @@
 <body >
 <section layout:fragment="content">
 
-    <!-- Sidebar -->
-    <div id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-            <li class="sidebar-brand">
-                <a href="#">
-                    <span th:text="${account.getFirstName() + ' ' +  account.getLastName()}"></span>
-                </a>
-            </li>
-            <li>
-                <a href="#" onclick="loadProfileItem(1);">Informations</a>
-            </li>
-            <li>
-                <a href="#" onclick="loadProfileItem(2);">Avis utilisateurs</a>
-            </li>
-            <li>
-                <a href="#" onclick="loadProfileItem(3);">Demandes en cours</a>
-            </li>
-            <li>
-                <a href="#" onclick="loadProfileItem(4);">Mes candidatures</a>
-            </li>
-            <li>
-                <a href="#" onclick="loadProfileItem(5);">Services passés</a>
-            </li>
-        </ul>
-    </div>
-    <!-- /#sidebar-wrapper -->
-
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <a href="#menu-toggle" class="btn btn-default glyphicon glyphicon-list" id="menu-toggle" onclick="menuToggleClicked()"></a>
-
-                    <div id="itemInformations">
-                        <div th:replace="account/fragments/informations :: informations(account=${account})">informations</div>
-                    </div>
-                    <div style="display: none;" id="itemReviews">
-                        <div th:replace="account/fragments/reviews :: reviews">reviews</div>
-                    </div>
-                    <div style="display: none;" id="itemPending">
-                        <div th:replace="account/fragments/pending :: pending"></div>
-                    </div>
-                    <div style="display: none;" id="itemApplications">
-                        <div th:replace="account/fragments/applications :: applications"></div>
-                    </div>
-                    <div style="display: none;" id="itemHistory">
-                        <div th:replace="account/fragments/history :: history"></div>
-                    </div>
-
-                    <!--<div id="profileSideBarContainerToReplace">-->
-                    <!--<h1>Simple Sidebar</h1>-->
-                    <!--<p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>-->
-                    <!--<p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>-->
-                    <!--</div>-->
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="active"><a href="#infos" role="tab" data-toggle="tab">Informations</a></li>
+                <li role="presentation"><a href="#avis" role="tab" data-toggle="tab">Avis</a></li>
+                <li role="presentation"><a href="#demandes" role="tab" data-toggle="tab">Mes demandes</a></li>
+                <li role="presentation"><a href="#candidatures" role="tab" data-toggle="tab">Mes candidatures</a></li>
+                <li role="presentation"><a href="#history" role="tab" data-toggle="tab">Services rendus</a></li>
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="infos">
+                    <div th:replace="account/fragments/informations :: informations(account=${account})">informations</div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="avis">
+                    <div th:replace="account/fragments/reviews :: reviews">reviews</div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="demandes">
+                    <div th:replace="account/fragments/pending :: pending"></div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="candidatures">
+                    <div th:replace="account/fragments/applications :: applications"></div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="history">
+                    <div th:replace="account/fragments/history :: history"></div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- /#page-content-wrapper -->
 
 </section>
-<!-- /#wrapper -->
 
 
 

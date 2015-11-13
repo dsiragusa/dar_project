@@ -67,9 +67,9 @@
                     <tbody>
                     <tr th:each="s : ${services}">
                         <td><a th:href="@{/service/{id}(id = ${s.id})}" th:text="${s.title}"></a></td>
-                        <td th:text="${s.serviceDeadline}"></td>
+                        <td th:text="${{s.serviceDeadline}}"></td>
                         <td th:text="${s.address.toString()}"></td>
-                        <td th:text="${s.biddingDeadline}"></td>
+                        <td th:text="${{s.biddingDeadline}}"></td>
                         <td th:text="${s.offerors.size()}"></td>
                     </tr>
                     </tbody>

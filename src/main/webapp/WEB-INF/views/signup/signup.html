@@ -36,13 +36,13 @@
 <section layout:fragment="content">
     <form class="form-narrow form-horizontal" method="post" th:action="@{/signup}" th:object="${account}">
         <!--/* Show general error message when form contains errors */-->
-        <th:block th:if="${#fields.hasErrors('${account.*}')}">
-            <div th:replace="fragments/alert :: alert (type='danger', message='Form contains errors. Please try again.')">
-                Alert
-            </div>
-        </th:block>
         <fieldset>
             <legend>Creation de compte</legend>
+            <th:block th:if="${#fields.hasErrors('${account.*}')}">
+                <div th:replace="fragments/alert :: alert (type='danger', message='Ce form contient des fautes de saisie')">
+                    Alert
+                </div>
+            </th:block>
             <div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
                 <label for="email" class="col-md-3 control-label">Email</label>
 
