@@ -7,12 +7,12 @@
 </head>
 <body>
 <section layout:fragment="content">
-    <form class="form-horizontal" method="post" th:action="@{/service/create}" th:object="${service}">
+    <form class="form-horizontal form-narrow" method="post" th:action="@{/service/create}" th:object="${service}">
         <!--/* Show general error message when form contains errors */-->
-        <th:block th:if="${#fields.hasErrors('${service.*}')}">
-            <div th:replace="fragments/alert :: alert (type='danger', message='Des champs sont invalides, veuillez réesayer.')">Alert</div>
-        </th:block>
         <fieldset>
+            <th:block th:if="${#fields.hasErrors('${service.*}')}">
+                <div th:replace="fragments/alert :: alert (type='danger', message='Des champs sont invalides, veuillez réesayer.')">Alert</div>
+            </th:block>
             <legend>Demander un service</legend>
             <div class="form-group" th:classappend="${#fields.hasErrors('title')}? 'has-error'">
                 <label for="title" class="col-md-3 control-label">Titre du service</label>

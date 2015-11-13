@@ -3,45 +3,45 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/default">
 <head>
-    <title>Sign In</title>
+    <title>Connexion</title>
 </head>
 <body>
 <section layout:fragment="content">
 <form class="form-narrow form-horizontal" action="#" method="post" th:action="@{/authenticate}">
-    <th:block th:if="${param.error != null}">
-        <div th:replace="fragments/alert :: alert (type='danger', message='Sign in error. Please try again.')">Alert</div>
-    </th:block>
     <fieldset>
         <legend>Connexion</legend>
+        <th:block th:if="${param.error != null}">
+            <div th:replace="fragments/alert :: alert (type='danger', message='Erreur de connexion. Veuillez essayer à nouveau')">Alert</div>
+        </th:block>
         <div class="form-group">
-            <label for="inputEmail" class="col-lg-2 control-label">Email</label>
-            <div class="col-lg-10">
+            <label for="inputEmail" class="col-md-3 control-label">Email</label>
+            <div class="col-md-9">
                 <input type="text" class="form-control" id="inputEmail" placeholder="Email" name="username" />
             </div>
         </div>
         <div class="form-group">
-            <label for="inputPassword" class="col-lg-2 control-label">Mot de Passe</label>
-            <div class="col-lg-10">
+            <label for="inputPassword" class="col-md-3 control-label">Mot de Passe</label>
+            <div class="col-md-9">
                 <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" />
             </div>
         </div>
         <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-10">
+            <div class="col-md-offset-3 col-md-9">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" name="_spring_security_remember_me" /> Se souvenir de moi !
+                        <input type="checkbox" name="_spring_security_remember_me" /> Se souvenir de moi
                     </label>
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-10">
+            <div class="col-md-offset-3 col-md-9">
                 <button type="submit" class="btn btn-default">Connexion</button>
             </div>
         </div>
         <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-10">
-                <p>Nouveau ici? <a href="signup" th:href="@{/signup}">Creer un compte</a></p>
+            <div class="col-md-offset-3 col-md-9">
+                <p>Nouveau ici? <a href="signup" th:href="@{/signup}">Créer un compte</a></p>
             </div>
         </div>
     </fieldset>

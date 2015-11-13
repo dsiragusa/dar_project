@@ -3,9 +3,11 @@ package etu.upmc.fr.config;
 import etu.upmc.fr.Application;
 import etu.upmc.fr.annotations.GetAccountArgumentResolver;
 import etu.upmc.fr.annotations.SearchParamsArgumentResolver;
+import etu.upmc.fr.annotations.ServiceValidator;
 import etu.upmc.fr.entity.Account;
 import etu.upmc.fr.format.AddressFormatter;
 import etu.upmc.fr.format.CategoryFormatter;
+import etu.upmc.fr.format.DateFormatter;
 import etu.upmc.fr.format.TagFormatter;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +87,7 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename(MESSAGE_SOURCE);
+        messageSource.setDefaultEncoding("UTF-8");
         messageSource.setCacheSeconds(5);
         return messageSource;
     }
@@ -92,6 +95,7 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
     @Bean
     public TemplateResolver templateResolver() {
         TemplateResolver templateResolver = new ServletContextTemplateResolver();
+        templateResolver.setCharacterEncoding("UTF-8");
         templateResolver.setPrefix(VIEWS);
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode("HTML5");
@@ -122,6 +126,11 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
         return new DomainClassConverter<FormattingConversionService>(mvcConversionService());
     }
 
+    @Bean
+    public ServiceValidator serviceValidator() {
+        return new ServiceValidator();
+    }
+
     @Override
     public Validator getValidator() {
         LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
@@ -146,6 +155,10 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
         registry.addFormatter(addressFormatter);
         registry.addFormatter(categoryFormatter);
         registry.addFormatter(tagFormatter);
+
+        DateFormatter dateFormatter = new DateFormatter();
+        dateFormatter.setPattern("dd/MM/yyyy HH:mm:ss");
+        registry.addFormatter(dateFormatter);
     }
 
     @Override

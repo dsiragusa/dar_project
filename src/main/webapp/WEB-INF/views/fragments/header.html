@@ -4,8 +4,8 @@
     <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
 </head>
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
-    <div class="container">
+<div class="navbar navbar-inverse" th:fragment="header">
+    <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
                 <span class="icon-bar"></span>
@@ -16,25 +16,27 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li th:if="${#authorization.expression('isAuthenticated()')}">
-                    <a th:href="@{/service/create}">Demander un service !</a>
-                </li>
-                <li th:if="${#authorization.expression('isAuthenticated()')}">
-                    <a th:href="@{/service}">Trouver un service a rendre !</a>
-                </li>
-                <li th:if="${#authorization.expression('isAuthenticated()')}">
-                    <a href="/profile" th:href="@{/profile}">Mon Profil</a>
-                </li>
+                <th:block th:if="${#authorization.expression('isAuthenticated()')}">
+                    <li >
+                        <a th:href="@{/service/create}">Demander</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/service}">Rendre</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/profile}">Mon Profil</a>
+                    </li>
+                    <li>
+                        <a th:href="@{#}" onclick="$('#form').submit();">
+                            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Déconnexion
+                        </a>
+                        <form style="visibility: hidden" id="form" method="post" th:action="@{/logout}"></form>
+                    </li>
+                </th:block>
                 <li th:if="${#authorization.expression('!isAuthenticated()')}">
                     <a href="/signin" th:href="@{/signin}">
                         <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Connexion
                     </a>
-                </li>
-                <li th:if="${#authorization.expression('isAuthenticated()')}">
-                    <a href="/logout" th:href="@{#}" onclick="$('#form').submit();">
-                        <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Déconnexion
-                    </a>
-                    <form style="visibility: hidden" id="form" method="post" action="#" th:action="@{/logout}"></form>
                 </li>
             </ul>
         </div>
