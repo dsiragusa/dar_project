@@ -14,7 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "service")
-public class Service implements Comparable<Service> {
+public class Service implements Comparable<Service>, java.io.Serializable {
 
     @Id
     @GeneratedValue
@@ -65,7 +65,7 @@ public class Service implements Comparable<Service> {
 
     public Service() {
 
-        setOfferors(new HashSet<>());
+        setOfferors(new HashSet<Account>());
         isActive = 1;
     }
 

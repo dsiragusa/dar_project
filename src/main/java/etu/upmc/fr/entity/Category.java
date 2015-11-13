@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "category")
-public class Category {
+public class Category implements java.io.Serializable {
 
     @Id
     @GeneratedValue

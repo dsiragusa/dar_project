@@ -10,7 +10,7 @@ import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "address")
-public class Address {
+public class Address implements java.io.Serializable {
     private static final String ZIP_MSG = "Ce service est limité à la region l'Ile de France";
     private static final String NOTBLANK_MSG = "Veuillez saisir des données pour ce champ";
 

@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by daniele on 11/11/15.
@@ -24,7 +25,8 @@ public class ServiceSpecification implements Specification<Service> {
         final List<Predicate> predicateList = new ArrayList<>();
 
         if ( ! StringUtils.isEmpty(serviceSearch.getTitle())) {
-            predicateList.add(criteriaBuilder.like(root.get(ServiceSearch.titleKey), '%' + serviceSearch.getTitle() + '%'));
+            Path<String> path = root.get(ServiceSearch.titleKey);
+            predicateList.add(criteriaBuilder.like(path, '%' + serviceSearch.getTitle() + '%'));
         }
 
         if (serviceSearch.getCategory() != null) {
@@ -32,8 +34,9 @@ public class ServiceSpecification implements Specification<Service> {
         }
 
         List<Predicate> tagPreds = new ArrayList<>();
+        Path<Set<Tag>> path = root.get(ServiceSearch.tagsKey);
         for (Tag t : serviceSearch.getTags()) {
-            tagPreds.add(criteriaBuilder.isMember(t, root.get(ServiceSearch.tagsKey)));
+            tagPreds.add(criteriaBuilder.isMember(t, path));
         }
         if ( ! tagPreds.isEmpty()) {
             predicateList.add(criteriaBuilder.or(tagPreds.toArray(new Predicate[tagPreds.size()])));

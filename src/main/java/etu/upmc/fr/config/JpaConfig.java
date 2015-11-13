@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,17 +40,18 @@ class JpaConfig implements TransactionManagementConfigurer {
 
     @Bean
     public DataSource configureDataSource() {
-        HikariConfig config = new HikariConfig();
-        config.setDriverClassName(driver);
-        config.setJdbcUrl(url);
-        config.setUsername(username);
-        config.setPassword(password);
-        config.addDataSourceProperty("cachePrepStmts", "true");
-        config.addDataSourceProperty("prepStmtCacheSize", "250");
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-        config.addDataSourceProperty("useServerPrepStmts", "true");
+//        config.addDataSourceProperty("cachePrepStmts", "true");
+//        config.addDataSourceProperty("prepStmtCacheSize", "250");
+//        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+//        config.addDataSourceProperty("useServerPrepStmts", "true");
 
-        return new HikariDataSource(config);
+        BasicDataSource bd = new BasicDataSource();
+        bd.setDriverClassName(driver);
+        bd.setUrl(url);
+        bd.setUsername(username);
+        bd.setPassword(password);
+        bd.setPoolPreparedStatements(false);
+        return bd;
     }
 
     @Bean

@@ -5,7 +5,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "state")
-public class State {
+public class State implements java.io.Serializable {
     public static final Integer BIDDING = 0,
                                 VALIDATING = 1,
                                 CONTRACT = 2;

@@ -92,6 +92,7 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
         return messageSource;
     }
 
+    /*
     @Bean
     public TemplateResolver templateResolver() {
         TemplateResolver templateResolver = new ServletContextTemplateResolver();
@@ -102,24 +103,7 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
         templateResolver.setCacheable(false);
         return templateResolver;
     }
-
-    @Bean
-    public SpringTemplateEngine templateEngine() {
-        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-        templateEngine.setTemplateResolver(templateResolver());
-        templateEngine.addDialect(new SpringSecurityDialect());
-        templateEngine.addDialect(new LayoutDialect());
-        return templateEngine;
-    }
-
-
-    @Bean
-    public ThymeleafViewResolver viewResolver() {
-        ThymeleafViewResolver thymeleafViewResolver = new ThymeleafViewResolver();
-        thymeleafViewResolver.setTemplateEngine(templateEngine());
-        thymeleafViewResolver.setCharacterEncoding("UTF-8");
-        return thymeleafViewResolver;
-    }
+*/
 
     @Bean
     public DomainClassConverter<?> domainClassConverter() {

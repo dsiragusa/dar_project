@@ -13,7 +13,7 @@ import java.util.Date;
 @Entity
 @Table(name = "verificationToken")
 @NamedQuery(name = VerificationToken.FIND_BY_TOKEN, query = "select a from VerificationToken a where a.token = :token")
-public class VerificationToken {
+public class VerificationToken implements java.io.Serializable {
     public static final String FIND_BY_TOKEN = "VerificationToken.findByToken";
     private static final int EXPIRATION = 60 * 24;
 
