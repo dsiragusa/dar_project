@@ -58,7 +58,7 @@ public class SignupController {
 		address.setMain(true);
 		addressRepository.save(address);
 
-		applicationEventPublisher.publishEvent(new OnRegistrationCompleteEvent(account));
+		//applicationEventPublisher.publishEvent(new OnRegistrationCompleteEvent(account));
 
 		userService.signin(account);
         // see /WEB-INF/i18n/messages.properties and /WEB-INF/views/homeSignedIn.html

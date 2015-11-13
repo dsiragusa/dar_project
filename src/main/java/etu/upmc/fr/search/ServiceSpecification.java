@@ -43,6 +43,8 @@ public class ServiceSpecification implements Specification<Service> {
             predicateList.add(criteriaBuilder.notEqual(root.get(ServiceSearch.accountExcludeKey), serviceSearch.getToExclude()));
         }
 
+        predicateList.add(criteriaBuilder.equal(root.get("isActive"), 1));
+
         return criteriaBuilder.and(predicateList.toArray(new Predicate[predicateList.size()]));
     }
 }

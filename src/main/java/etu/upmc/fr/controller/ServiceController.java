@@ -82,7 +82,7 @@ public class ServiceController {
         state.setService(service);
         stateRepository.save(state);
 
-        applicationEventPublisher.publishEvent(new OnServiceCreatedEvent(account, service));
+        //applicationEventPublisher.publishEvent(new OnServiceCreatedEvent(account, service));
 
         MessageHelper.addSuccessAttribute(ra, "service.creation.success");
         return "redirect:/service";

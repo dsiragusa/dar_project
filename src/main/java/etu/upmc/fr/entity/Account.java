@@ -16,34 +16,35 @@ import java.util.*;
 @Entity
 @Table(name = "account")
 @DynamicInsert
-@NamedQuery(name = Account.FIND_BY_EMAIL, query = "select a from Account a where a.email = :email")
 public class Account implements java.io.Serializable {
+	private static final String EMAIL_MSG = "L'adresse rentré n'est pas bien formatté";
+	private static final String NOTBLANK_MSG = "Veuillez saisir des données pour ce champ";
 
-	public static final String FIND_BY_EMAIL = "Account.findByEmail";
+	public static final String FIND_BbY_EMAIL = "Account.findByEmail";
 
 	@Id
 	@GeneratedValue
 	private Long id;
 
 	@Column(unique = true)
-    @NotBlank
-    @Email
+    @NotBlank(message = NOTBLANK_MSG)
+    @Email(message = EMAIL_MSG)
 	private String email;
 
 	@Column(columnDefinition = "boolean default false")
 	private boolean emailValidated;
 
 	@JsonIgnore
-    @NotBlank
+    @NotBlank(message = NOTBLANK_MSG)
 	private String password;
 
 	@Column(nullable = false)
 	private String role = "ROLE_USER";
 
-    @NotBlank
+    @NotBlank(message = NOTBLANK_MSG)
 	private String firstName;
 
-    @NotBlank
+    @NotBlank(message = NOTBLANK_MSG)
 	private String lastName;
 
     @Temporal(TemporalType.TIMESTAMP)

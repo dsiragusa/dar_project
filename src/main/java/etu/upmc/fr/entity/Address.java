@@ -11,22 +11,24 @@ import javax.validation.constraints.Pattern;
 @Entity
 @Table(name = "address")
 public class Address {
+    private static final String ZIP_MSG = "Ce service est limité à la region l'Ile de France";
+    private static final String NOTBLANK_MSG = "Veuillez saisir des données pour ce champ";
+
     @Id
     @GeneratedValue
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = NOTBLANK_MSG)
     private String name;
 
-    @NotBlank
+    @NotBlank(message = NOTBLANK_MSG)
     private String line1;
     private String line2;
 
-    @NotBlank
+    @NotBlank(message = NOTBLANK_MSG)
     private String city;
 
-    @Length(min = 5, max = 5)
-    @Pattern(regexp = "^(7[578]|9[1-5])[0-9]{3}$")
+    @Pattern(regexp = "^(7[578]|9[1-5])[0-9]{3}$", message = ZIP_MSG)
     private String zip;
 
     private String country = "FR";
@@ -37,7 +39,7 @@ public class Address {
     private Account account;
 
     public Address() {
-        name = "New address";
+        name = "Mon adresse";
     }
 
     public Long getId() {
