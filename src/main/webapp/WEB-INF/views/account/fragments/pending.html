@@ -3,37 +3,39 @@
 <head>
 </head>
 <body>
-<div th:fragment="pending" th:align="center">
+<div th:fragment="pending">
     <th:block th:unless="${account.requests.isEmpty()}">
-        <div class="table-responsive col-md-10 col-md-offset-2">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Titre</th>
-                <th>Volontaires</th>
-                <th>Date limite pour les proposition</th>
-                <th>Date limite pour le service</th>
-            </tr>
+        <div class="panel">
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Volontaires</th>
+                        <th>Date limite pour les proposition</th>
+                        <th>Date limite pour le service</th>
+                    </tr>
 
-            </thead>
-            <tr th:each="request : ${account.requests}" th:if="${request.getCurrentState().code &lt; 2}">
-                <tbody>
-                <td><a th:href="@{/service/{id}(id = ${request.id})}" th:text="${request.title}"></a></td>
-                <td>
-                    <th:block th:if="${!request.offerors.isEmpty()}">
-                        <ul th:each="offeror : ${request.offerors}">
-                            <li th:text="${offeror}"></li>
-                        </ul>
-                    </th:block>
-                    <th:block th:if="${request.offerors.isEmpty()}">
-                        Aucun volontaire pour l'instant.
-                    </th:block>
-                </td>
-                <td th:text="${request.biddingDeadline}"></td>
-                <td th:text="${request.serviceDeadline}"></td>
-                </tbody>
-            </tr>
-        </table>
+                    </thead>
+                    <tbody>
+                    <tr th:each="request : ${account.requests}" th:if="${request.getCurrentState().code &lt; 2}">
+                        <td><a th:href="@{/service/{id}(id = ${request.id})}" th:text="${request.title}"></a></td>
+                        <td>
+                            <th:block th:if="${!request.offerors.isEmpty()}">
+                                <ul th:each="offeror : ${request.offerors}">
+                                    <li th:text="${offeror}"></li>
+                                </ul>
+                            </th:block>
+                            <th:block th:if="${request.offerors.isEmpty()}">
+                                Aucun volontaire pour l'instant.
+                            </th:block>
+                        </td>
+                        <td th:text="${{request.biddingDeadline}}"></td>
+                        <td th:text="${{request.serviceDeadline}}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </th:block>
     <th:block th:if="${account.requests.isEmpty()}">

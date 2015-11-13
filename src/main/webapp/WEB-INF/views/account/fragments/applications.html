@@ -4,23 +4,33 @@
 </head>
 <body>
 <div th:fragment="applications" th:align="center">
-    <th:block th:if="${!account.offers.isEmpty()}">
-        <table>
-            <tr>
-                <th>Titre</th>
-                <th>Demandeur</th>
-                <th>Date limite pour rendre service</th>
-            </tr>
-            <tr th:each="offer : ${account.offers}" th:if="${offer.getCurrentState().code == 0}">
-                <td><a th:href="@{/service/{id}(id = ${offer.id})}" th:text="${offer.title}"></a></td>
-                <td th:text="${offer.contractor}"></td>
-                <td th:text="${offer.serviceDeadline}"></td>
-            </tr>
-        </table>
-    </th:block>
-    <th:block th:if="${account.offers.isEmpty()}">
-        <p>Vous n'êtes volontaire pour aucun service.</p>
-    </th:block>
+    <div class="panel">
+        <div class="panel-body">
+            <th:block th:if="${!account.offers.isEmpty()}">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Titre</th>
+                            <th>Demandeur</th>
+                            <th>Adresse de livraison</th>
+                            <th>Date limite pour rendre service</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="offer : ${account.offers}" th:if="${offer.getCurrentState().code == 0}">
+                            <td><a th:href="@{/service/{id}(id = ${offer.id})}" th:text="${offer.title}"></a></td>
+                            <td th:text="${offer.requestor}"></td>
+                            <td th:text="${offer.address}"></td>
+                            <td th:text="${{offer.serviceDeadline}}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </th:block>
+            <th:block th:if="${account.offers.isEmpty()}">
+                <p>Vous n'êtes volontaire pour aucun service.</p>
+            </th:block>
+        </div>
+    </div>
 </div>
 </body>
 </html>

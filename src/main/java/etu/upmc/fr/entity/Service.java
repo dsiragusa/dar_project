@@ -53,12 +53,10 @@ public class Service implements Comparable<Service> {
 
     @Temporal(TemporalType.TIMESTAMP)
     @NotNull(message = "{notBlank.message}")
-    @MyDateTime
     private Date biddingDeadline;
 
     @Temporal(TemporalType.TIMESTAMP)
     @NotNull(message = "{notBlank.message}")
-    @MyDateTime
     private Date serviceDeadline;
 
     @NotNull
