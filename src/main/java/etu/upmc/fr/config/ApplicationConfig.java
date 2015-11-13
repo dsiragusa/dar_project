@@ -16,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import etu.upmc.fr.Application;
 
 @EnableAsync
-@EnableScheduling
 @Configuration
 @PropertySource("classpath:persistence.properties")
 @ComponentScan(basePackageClasses = Application.class, excludeFilters = @Filter({Controller.class, Configuration.class}))
