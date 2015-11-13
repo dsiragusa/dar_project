@@ -1,7 +1,29 @@
 \section{Compléments}
-Ici sera les compléments...
-\subsection{Extensions possibles}
-Ici sera la description des extensions possibles...
-\subsection{Monétisation}
-Ici sera la description des possibilités de monétisation offertes par notre application...
 
+\subsection{Extensions possibles}
+
+\subsubsection{Système de notifications}
+Pour l'heure, les volontaires sont notifiés via l'envoie d'un mail lorsqu'ils sont sélectionnés pour une tâche. L'idée serait de se changer ce système pour des notifications internes au site. Ces notifications seraient signalées à l'utilisateur via un petit popup aparaissant dans le header de la page, près du lien vers le profil de l'utilisateur. Lors de l'arrivée sur son profil, l'utilisateur serait alors informé de son acceptation via un message plus explicite.
+
+\subsubsection{Système d'administration}
+On imagine bien qu'une application permettant aux utilisateurs de demander des services contre de l'argent pourrait facilement être utilisée à des fins illégales. Pour prévenir ce genre d'abus, plusieurs solutions nous semble possible:
+
+\begin{itemize}
+\item la mise en place d'administrateurs chargés de valider et de supprimer les annonces dites "illégales". Cela supposerait plusieurs ajouts, notamment une nouvelle table dans la base de donnée qui stockerait les administrateurs. De nouveaux boutons permettant de supprimer ou de modifier une annonce apparaîteraient alors lorsqu'un administrateur arriverait sur la page d'une annonce. Il faudrait également ajouter la possibilité de bannir un utilisateur, avec l'ajout d'un bouton accessibles uniquement aux administrateurs sur la page de profil d'un utilisateur. Une dernière idée serait d'ajouter sur la page des services un bouton "Signaler l'annonce". Visible par tous, ce boton permettrait d'envoyer une notification aux  administrateurs du site qui leur permettrait de venir contrôlé l'annonce.
+\item l'implantation d'une tâche automatisée chargée de parcourire les annonces dus site à interval régulier et de supprimer automatiquement les annonces. La tâche pourrait par exemple parser les champ des annonces à la recherche de mots révélateurs. Cette solution poserait de nombreux problèmes de concurrence, notament avec notre tâche ettant à jour les annonces ayant dépassé leur date de rendu.
+\end{itemize}
+
+\subsubsection{Calcul du temps nécessaire à la satisfaction d'un service}
+L'API Google Maps permet de connaître la distance séparant deux points sur la carte. Nous pourrions utiliser cette information qui, couplée au moyen de transport, pourrait nous permettre d'offrire à l'utilisateur une estimation du temps qu'il mettra à accomplir le service. Nous pourrions alors, en comparant à la date courante de l'utilisateur, signaler à l'utilisateur qu'il ne pourra pas accomplir ce service dans les temps.
+
+\subsubsection{Intégration d'un système de paiement}
+Actuellement, le paiement des services est laissé à la discrétion des utilisateurs. Nous pourrions intégrer la mécanique de paiement directement au site via un service comme paypal par exemple. Il faudrait alors notament se poser la question de la politique de paiement. Le volontaire pourrais par exemple être payer la moitié de la somme au moment ou il est sélectionner et l'autre moitié après confirmation du client que le service a bien été rendu.
+
+\subsubsection{Intégration d'un système de réputation}
+Permettre aux utilisateurs de s'évaluer entre eux au fil des transactions leur permettrait de mieux sélectionner leurs intermédiaires. On pourrait imaginer que le système de réputation soit diviser en deux: en tant que volontaire et en tant que demandeur. La réputation prendrait la forme d'un score global avec des évaluations au format texte.
+
+\subsubsection{Respect de la norme ARIA}
+De part son concept, notre application s'adresse tout particulièrement aux personnes ne pouvant pas sortir de chez elles du fait d'un handicap. Or, la norme ARIA offre un ensemble de propriétés qui, si elles sont respectées, garantissent l'accessibilité du site pour les personnes handicapées. Le non-respect de cette norme nous couperais donc l'accès à une énorme partie de notre publique potentiel. L'application de la norme n'est néanmoins pas immédiat et son respect impliquerais de nombreuses modifications dans l'interface de notre site.
+
+\subsection{Monétisation}
+La monétisation de notre application découle directement de notre amélioration intégrant le système de paiement à notre site. L'idée serait alors de prélever un pourcentage sur chaque transaction effectuée. Une autre idée serait d'offrire des services supplémentaires payant. Par exemple l'ajout de photos supplémentaires pour les annonces ou un système permettant aux utilisateurs de programmer automatiquement l'ajout d'annonce de façon périodique.
