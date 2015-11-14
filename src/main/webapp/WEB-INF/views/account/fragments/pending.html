@@ -9,7 +9,7 @@
             <th:block th:if="${account.requests != null}">
                 <p>Aucune requête en cours.</p>
             </th:block>
-            <th:block th:unless="${account.requests != null}">
+            <th:block th:if="${account.requests == null}">
                 <table class="table table-striped">
                     <thead>
                     <tr>

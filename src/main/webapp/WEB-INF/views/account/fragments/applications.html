@@ -6,7 +6,7 @@
 <div th:fragment="applications" th:align="center">
     <div class="panel">
         <div class="panel-body">
-            <th:block th:if="${!account.offers.isEmpty()}">
+            <th:block th:if="${account.offers != null}">
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -26,7 +26,7 @@
                     </tbody>
                 </table>
             </th:block>
-            <th:block th:if="${account.offers.isEmpty()}">
+            <th:block th:if="${account.offers == null}">
                 <p>Vous n'êtes volontaire pour aucun service.</p>
             </th:block>
         </div>
