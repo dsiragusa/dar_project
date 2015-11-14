@@ -8,6 +8,10 @@
 <body >
 <section layout:fragment="content">
 
+    <th:block th:if="${message != null}">
+        <!-- /* The message code is returned from the @Controller */ -->
+        <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
+    </th:block>
     <div class="row">
         <div class="col-md-12">
             <ul class="nav nav-tabs">
@@ -36,11 +40,6 @@
             </div>
         </div>
     </div>
-
 </section>
-
-
-
-
 </body>
 </html>

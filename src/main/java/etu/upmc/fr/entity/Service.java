@@ -139,6 +139,10 @@ public class Service implements java.io.Serializable {
             throw new Exception("Contractor cannot be the same account as requestor");
         }
 
+        if (this.contractor != null || getCurrentState().getCode().equals(State.CONTRACT)) {
+            throw new Exception("Service already affected");
+        }
+
         this.contractor = contractor;
     }
 

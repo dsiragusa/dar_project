@@ -1,12 +1,11 @@
 package etu.upmc.fr.controller;
 
+import etu.upmc.fr.account.UserService;
 import etu.upmc.fr.entity.Account;
+import etu.upmc.fr.entity.Address;
 import etu.upmc.fr.events.OnRegistrationCompleteEvent;
 import etu.upmc.fr.repository.AccountRepository;
-import etu.upmc.fr.account.UserService;
-import etu.upmc.fr.entity.Address;
 import etu.upmc.fr.repository.AddressRepository;
-import etu.upmc.fr.repository.VerificationTokenRepository;
 import etu.upmc.fr.support.web.MessageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -16,7 +15,6 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -58,10 +56,10 @@ public class SignupController {
 		address.setMain(true);
 		addressRepository.save(address);
 
-		//applicationEventPublisher.publishEvent(new OnRegistrationCompleteEvent(account));
+		applicationEventPublisher.publishEvent(new OnRegistrationCompleteEvent(account));
 
 		userService.signin(account);
-        // see /WEB-INF/i18n/messages.properties and /WEB-INF/views/homeSignedIn.html
+
         MessageHelper.addSuccessAttribute(ra, "signup.success");
 		return "redirect:/";
 	}

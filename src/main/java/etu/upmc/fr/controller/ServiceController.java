@@ -82,7 +82,7 @@ public class ServiceController {
         state.setService(service);
         stateRepository.save(state);
 
-        //applicationEventPublisher.publishEvent(new OnServiceCreatedEvent(account, service));
+        applicationEventPublisher.publishEvent(new OnServiceCreatedEvent(account, service));
 
         MessageHelper.addSuccessAttribute(ra, "service.creation.success");
         return "redirect:/service";
@@ -98,7 +98,7 @@ public class ServiceController {
 
     @RequestMapping(value = "service")
     public String list(Model model, @SearchParams ServiceSearch serviceSearch, @GetAccount Account account, Pageable pageable) {
-        //serviceSearch.setToExclude(account);
+
         ServiceSpecification spec = new ServiceSpecification(serviceSearch);
         model.addAttribute("services", serviceRepository.findAll(spec, pageable));
         model.addAttribute("serviceSearch", serviceSearch);
@@ -137,6 +137,26 @@ public class ServiceController {
         MessageHelper.addSuccessAttribute(ra, "service.apply.success");
 
         return "redirect:/service";
+    }
+
+    @RequestMapping(value = "service/{service}/accept/{offeror}", method = RequestMethod.POST)
+    public String accept(@GetAccount Account account, @PathVariable("service") Service service,
+                         @PathVariable("offeror") Account offeror, RedirectAttributes ra) {
+        if ( ! account.equals(service.getRequestor())) {
+            throw new InvalidOperationException();
+        }
+
+        try {
+            service.setContractor(offeror);
+        } catch (Exception e) {
+            throw new InvalidOperationException();
+        }
+
+        serviceRepository.save(service);
+
+        MessageHelper.addSuccessAttribute(ra, "service.accept.success");
+
+        return "redirect:/profile";
     }
 
     //TODO Remove or adapt for prod!!!

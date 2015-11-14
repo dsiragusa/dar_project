@@ -23,6 +23,8 @@ public class ServiceCreatedListener implements ApplicationListener<OnServiceCrea
             return;
         }
 
+        //not supported for trial AppEngine instances
+        /*
         try {
             Message message = mailSender.createMessage();
             message.setRecipients(Message.RecipientType.TO,
@@ -35,5 +37,6 @@ public class ServiceCreatedListener implements ApplicationListener<OnServiceCrea
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+        */
     }
 }
