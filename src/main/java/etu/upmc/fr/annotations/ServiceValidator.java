@@ -24,7 +24,7 @@ public class ServiceValidator implements Validator {
         if (s.getBiddingDeadline() == null || s.getServiceDeadline() == null) {
             return;
         }
-        
+
         if (s.getBiddingDeadline().after(s.getServiceDeadline())) {
             errors.rejectValue("biddingDeadline", "futureDate", new Object[]{"biddingDeadline"}, "La fin des candidatures ne peut pas dépasser la limite de livraison");
         }
