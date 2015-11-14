@@ -20,8 +20,6 @@ public class Account implements java.io.Serializable {
 	private static final String EMAIL_MSG = "L'adresse rentré n'est pas bien formatté";
 	private static final String NOTBLANK_MSG = "Veuillez saisir des données pour ce champ";
 
-	public static final String FIND_BbY_EMAIL = "Account.findByEmail";
-
 	@Id
 	@GeneratedValue
 	private Long id;

@@ -14,7 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "service")
-public class Service implements Comparable<Service>, java.io.Serializable {
+public class Service implements java.io.Serializable {
 
     @Id
     @GeneratedValue
@@ -59,14 +59,9 @@ public class Service implements Comparable<Service>, java.io.Serializable {
     @NotNull(message = "{notBlank.message}")
     private Date serviceDeadline;
 
-    @NotNull
-
-    private int isActive;
-
     public Service() {
 
         setOfferors(new HashSet<Account>());
-        isActive = 1;
     }
 
     public Long getId() {
@@ -195,13 +190,4 @@ public class Service implements Comparable<Service>, java.io.Serializable {
         this.description = description;
     }
 
-    public int getIsActive() { return isActive; }
-
-    public void setIsActive(int isActive) { this.isActive = isActive; }
-
-    public int compareTo(Service service) {
-        Date date = service.getBiddingDeadline();
-
-        return this.getBiddingDeadline().before(date) ? -1 : this.getBiddingDeadline().after(date) ? 1 : 0;
-    }
 }
