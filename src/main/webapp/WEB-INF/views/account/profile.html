@@ -4,53 +4,6 @@
       layout:decorator="layout/default">
 <head>
     <title>Profile</title>
-    <link th:href="@{/resources/css/simple-sidebar.css}" rel="stylesheet" media="screen" />
-    <script>
-        $("#menu-toggle").click(function(e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
-    </script>
-
-    <script>
-        function loadProfileItem(index) {
-            hideAll();
-            switch (index) {
-                case 1:
-                    document.getElementById('itemInformations').style.display = "inline";
-                    break;
-
-                case 2:
-                    document.getElementById('itemReviews').style.display = "inline";
-                    break;
-
-                case 3:
-                    document.getElementById('itemPending').style.display = "inline";
-                    break;
-
-                case 4:
-                    document.getElementById('itemApplications').style.display = "inline";
-                    break;
-
-                case 5:
-                    document.getElementById('itemHistory').style.display = "inline";
-                    break;
-            }
-        }
-
-        function hideAll() {
-            document.getElementById('itemInformations').style.display = "none";
-            document.getElementById('itemReviews').style.display = "none";
-            document.getElementById('itemPending').style.display = "none";
-            document.getElementById('itemApplications').style.display = "none";
-            document.getElementById('itemHistory').style.display = "none";
-        }
-    </script>
-    <script>
-        function menuToggleClicked() {
-            $("#wrapper").toggleClass("toggled");
-        }
-    </script>
 </head>
 <body >
 <section layout:fragment="content">

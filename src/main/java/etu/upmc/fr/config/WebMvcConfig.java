@@ -41,6 +41,7 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
 import java.util.List;
+import java.util.Properties;
 
 import static org.springframework.context.annotation.ComponentScan.Filter;
 
@@ -51,8 +52,6 @@ import static org.springframework.context.annotation.ComponentScan.Filter;
 class WebMvcConfig extends WebMvcConfigurationSupport {
 
     private static final String MESSAGE_SOURCE = "/WEB-INF/i18n/messages";
-    private static final String VIEWS = "/WEB-INF/views/";
-
     private static final String RESOURCES_LOCATION = "/resources/";
     private static final String RESOURCES_HANDLER = RESOURCES_LOCATION + "**";
 
@@ -88,22 +87,13 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename(MESSAGE_SOURCE);
         messageSource.setDefaultEncoding("UTF-8");
+
+        Properties p = new Properties();
+        p.setProperty(MESSAGE_SOURCE, "UTF-8");
+        messageSource.setFileEncodings(p);
         messageSource.setCacheSeconds(5);
         return messageSource;
     }
-
-    /*
-    @Bean
-    public TemplateResolver templateResolver() {
-        TemplateResolver templateResolver = new ServletContextTemplateResolver();
-        templateResolver.setCharacterEncoding("UTF-8");
-        templateResolver.setPrefix(VIEWS);
-        templateResolver.setSuffix(".html");
-        templateResolver.setTemplateMode("HTML5");
-        templateResolver.setCacheable(false);
-        return templateResolver;
-    }
-*/
 
     @Bean
     public DomainClassConverter<?> domainClassConverter() {
