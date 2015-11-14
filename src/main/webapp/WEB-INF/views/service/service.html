@@ -14,7 +14,7 @@
         <div class="col-md-6">
             <div class="row service-infos">
                 <div class="col-md-12" th:if="${ownService}">
-                    <h5 th:inline="text">Vous avez demandé ce service.</h5>
+                    <h5 th:inline="text">Vous êtes le demandeur de ce service</h5>
                 </div>
                 <div class="col-md-12" th:unless="${ownService}">
                     <h5 th:inline="text">Demandé par <a th:href="@{/account/{email}(email=${service.requestor.email})}"
@@ -23,36 +23,50 @@
                 <div class="col-md-12">
                     <p th:text="${service.description}"></p>
                 </div>
-                <div class="col-md-12 service-rdv">
+                <div class="col-md-12 service-rdv" th:attr="data-destination=${service.address}">
                     <h4>Rendez-vous</h4>
 
-                    <p th:text="${service.requestor.firstName + ' ' + service.requestor.lastName}"></p>
-
-                    <p id="end" th:text="${service.address}"></p>
+                    <p th:inline="text">[[${service.requestor.firstName}]] [[${service.requestor.lastName}]], [[${service.address}]]"</p>
                 </div>
-                <div class="col-md-6 col-md-offset-3" th:if="${ownService}">
+                <div class="col-md-12" th:if="${ownService}">
                     <div th:if="${service.offerors.isEmpty()}">
                         Personne n'a candidaté a votre service.
                     </div>
                     <div th:unless="${service.offerors.isEmpty()}">
-                        Liste des candidats
-                        <ul>
-                            <li th:each="offeror : ${service.offerors}">
-                                <span th:text="${offeror.firstName}"></span>
-                                <span th:text="${offeror.lastName}"></span>
-                            </li>
-                        </ul>
+                        <h4>Candidats</h4>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Prénom</th>
+                                    <th>Nom</th>
+                                    <th>Email</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="offeror : ${service.offerors}">
+                                    <td th:text="${offeror.firstName}"></td>
+                                    <td th:text="${offeror.lastName}"></td>
+                                    <td th:text="${offeror.email}"></td>
+                                    <td>
+                                        <form method="post" th:action="@{/service/{service}/accept/{offeror}(service = ${service.id}, offeror = ${offeror.id})}">
+                                            <button class="btn btn-sm btn-success" type="submit">Accepter</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="col-md-6 col-md-offset-3" th:unless="${ownService}">
-                    <div th:hidden="${!(service.offerors.contains(account))}">
-                        <div class="btn btn-success disabled">Vous avez condidaté !</div>
-                    </div>
-                    <div th:hidden="${service.offerors.contains(account)}">
+                    <th:block th:unless="${service.offerors.contains(account)}">
+                            <div class="btn btn-success disabled">Vous êtes déjà candidât</div>
+                    </th:block>
+                    <th:block th:if="${service.offerors.contains(account)}">
                         <form th:action="@{/service/{id}(id = ${service.id})}" method="post">
                             <button class="btn btn-success" type="submit">Rendre service!</button>
                         </form>
-                    </div>
+                    </th:block>
                 </div>
             </div>
 
@@ -76,8 +90,7 @@
                         <div class="col-md-8">
                             <select id="favorites" th:each="address : ${account.addresses}" style="width:100%;">
                                 <option th:value="NULL"></option>
-                                <option th:value="${address}"><span
-                                        th:text="${address.name + ': ' + address.toString()}"></span></option>
+                                <option th:value="${address}"><span th:text="${address.name + ': ' + address.toString()}"></span></option>
                             </select>
                         </div>
                     </div>
@@ -99,14 +112,6 @@
                         </div>
                     </div>
                 </div>
-                <!--
-            <div class="col-md-6">
-                <b>Lieu d'achat:</b>
-                <br />
-                <p><span id="waypoint" th:text="${service.biddingPlaceAdresse}"></span></p>
-                <br />
-                </div>
-                -->
             </div>
         </div>
         <div class="col-md-6">

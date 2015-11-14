@@ -27,6 +27,8 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
 
     @Override
     public void onApplicationEvent(OnRegistrationCompleteEvent event) {
+        //not supported for trial AppEngine instances
+        /*
         Account account = event.getAccount();
         String token = UUID.randomUUID().toString();
         VerificationToken verificationToken = new VerificationToken(token, account);
@@ -46,5 +48,6 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+        */
     }
 }

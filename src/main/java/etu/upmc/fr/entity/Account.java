@@ -17,10 +17,8 @@ import java.util.*;
 @Table(name = "account")
 @DynamicInsert
 public class Account implements java.io.Serializable {
-	private static final String EMAIL_MSG = "L'adresse rentré n'est pas bien formatté";
+	private static final String EMAIL_MSG = "L'\''adresse saisi n'\''est pas bien formatté";
 	private static final String NOTBLANK_MSG = "Veuillez saisir des données pour ce champ";
-
-	public static final String FIND_BbY_EMAIL = "Account.findByEmail";
 
 	@Id
 	@GeneratedValue
@@ -166,4 +164,26 @@ public class Account implements java.io.Serializable {
 	public String toString() {
 		return firstName + " " + lastName;
 	}
+
+	@Override
+	public int hashCode() {
+		if (id == null && email == null) {
+			return -1;
+		}
+
+		return email.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if ( ! (o instanceof Account)) {
+			return false;
+		}
+
+		return email.equals(((Account)o).getEmail());
+	}
+
 }

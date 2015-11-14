@@ -1,15 +1,12 @@
 package etu.upmc.fr.controller;
 
-import java.security.Principal;
-import java.util.Calendar;
-
 import etu.upmc.fr.account.UserService;
 import etu.upmc.fr.annotations.GetAccount;
 import etu.upmc.fr.entity.Account;
 import etu.upmc.fr.entity.VerificationToken;
+import etu.upmc.fr.repository.AccountRepository;
 import etu.upmc.fr.repository.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,7 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
-import etu.upmc.fr.repository.AccountRepository;
+
+import java.security.Principal;
+import java.util.Calendar;
 
 @Controller
 @Secured("ROLE_USER")

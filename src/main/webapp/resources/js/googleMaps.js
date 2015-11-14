@@ -20,37 +20,23 @@
 
 
         function calculateAndDisplayRoute() {
-
-            /*
-             var waypoint = document.getElementById('waypoint').innerHTML;
-
-             var waypointArray = [];
-
-             if(waypoint != "") {
-             var temp = {location: waypoint, stopover: true};
-             waypointArray.push(temp);
-             }
-             */
-
             var travelMode = {
                 transit : google.maps.TravelMode.TRANSIT,
                 driving : google.maps.TravelMode.DRIVING,
                 bicycling : google.maps.TravelMode.BICYCLING,
                 walking : google.maps.TravelMode.WALKING
             };
-            var selectedTravelMode = travelMode[$('#travelMode').val()];
 
             directionsService.route({
                 origin: $('#start').val(),
-                destination: $('#end').text(),
-                //waypoints: waypointArray,
+                destination: $('.service-rdv').data("destination"),
                 optimizeWaypoints: true,
-                travelMode: selectedTravelMode
+                travelMode: travelMode[$('#travelMode').val()]
             }, function(response, status) {
                 if (status === google.maps.DirectionsStatus.OK) {
                     directionsDisplay.setDirections(response);
                 } else {
-                    window.alert('Le calcul de l\'itinéraire a échoué. Peut être avez vous entrer une mauvaise adresse ?' + status);
+                    window.alert("Un des adresses n'est pas valide");
                 }
             });
         }

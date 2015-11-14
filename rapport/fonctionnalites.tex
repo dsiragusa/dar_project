@@ -1,9 +1,19 @@
 \section{Fonctionnalités}
-Ici sera la description des fonctionnalités...
-\subsection{Points forts}
-Ici sera la description des points forts de notre application...
-\subsection{Points faibles}
-Ici sera la description des points faibles de notre application...
-\subsection{Non implémentées}
-Ici sera la description des fonctionnalités non implémentées...
 
+\subsection{Implémentées}
+
+\subsubsection{Comptes utilisateurs}
+Notre application possède un système complet de gestion des comptes utilisateurs. Les parties enregistrement et identification de l'utilisateur nous ont été fournies par le framework Spring. L'avantage est que ces fonctionnalités sont extrêmement sûres en terme de sécurité. Assurées via Spring Security, le mot de passe de l'utilisateur est chiffré via une fonction de hachage SHA-256 et un salt est également généré. L'identifaction de l'utilisateur se fait à l'aide de son adresse email et de son mot de passe.
+\newline
+Nous contrôlons alors si l'utilisateur est bien identifié lorsqu'il tente d'accéder aux fonctionnalités du site. De plus, après son inscription, un mail est envoyé à l'utilisateur sur l'adresse mail qu'il a renseigné afin de lui demander de la confirmer.
+
+\subsubsection{Création d'une demande de service.}
+Les créations de demande de service permettent à l'utilisateur de renseigner un titre et une description pour le service. Il doit également renseigner l'adresse  à laquelle il souhaite que le service lui soit rendu. Il associera également le service à une catégorie et lui attribuera des tags. Nous utilisons JQuery pour l'ajout de tags. Il doit également spécifier la date de limite de fin des candidatures et la date limite pour rendre le service.
+
+\subsubsection{Rechercher un service à rendre}
+Les recherches de services utilisent les chmps remplis par le demandeur lors de la création du service. L'utilisateur peut alors naviguer à travers les services disponibles en spécifiant un titre, et une catégorie. Le résultat de la recherche affiche notament la date limite pour les candidatures et le rendu du service. L'utilisateur peut également choisir le nombre d'annonce à afficher par page.
+
+\subsection{Non implémentées}
+
+\subsubsection{Candidater pour un service}
+Cette fonctionnalité n'a pas été implémentée par manque de temps. L'idée était que le demandeur de service puisse sélectionner le volontaire de son choix parmis ceux s'étant proposés pour le service. Le volontaire sélectionné serait alors notifié de sa sélection via l'envoie d'un mail à son adresse.

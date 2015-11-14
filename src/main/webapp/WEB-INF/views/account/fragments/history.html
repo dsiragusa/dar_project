@@ -6,7 +6,7 @@
 <div th:fragment="history" th:align="center">
     <div class="panel">
         <div class="panel-body">
-            <th:block th:if="${!account.contracts.isEmpty()}">
+            <th:block th:unless="${account.contracts == null or account.contracts.isEmpty()}">
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -24,7 +24,7 @@
                     </tbody>
                 </table>
             </th:block>
-            <th:block th:if="${account.contracts.isEmpty()}">
+            <th:block th:if="${account.contracts == null or account.contracts.isEmpty()}">
                 <p>Votre historique est vide.</p>
             </th:block>
         </div>
