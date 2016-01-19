@@ -40,7 +40,9 @@
 
                     if (availableIds[newTagId] === undefined) {
                         availableIds[newTagId] = true;
-                        $('<option value="' + result.id + '">' + result.name + '</option>').appendTo($tags);
+                        var $newOption = $('<option value="' + result.id + '"></option>');
+                        $newOption.text(result.name);
+                        $newOption.appendTo($tags);
 
                     }
 
